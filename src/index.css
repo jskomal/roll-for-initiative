@@ -1,4 +1,4 @@
-/*
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'); /*
   Josh's Custom CSS Reset
   https://www.joshwcomeau.com/css/custom-css-reset/
 */
@@ -15,9 +15,10 @@ body {
   height: 100%;
 }
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Press Start 2P', cursive;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  background: radial-gradient(circle, rgb(1, 43, 71) 0%, rgb(1, 29, 51) 100%);
 }
 img,
 picture,
@@ -39,10 +40,15 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+button {
+  color: var(--text-color);
   overflow-wrap: break-word;
 }
 #root,
 #__next {
   isolation: isolate;
+  --text-color: rgb(232, 193, 93);
 }
+
+/* mobile dimensions 768 x 1024 */
