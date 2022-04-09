@@ -11,6 +11,7 @@
   margin-top: 30vh;
   margin-bottom: 10vh;
   text-shadow: 3px 3px black;
+  text-align: center;
 }
 
 .enter-button {
@@ -32,4 +33,5 @@
   height: 100vh;
   position: fixed;
   z-index: -1;
+  box-shadow: 0 0 50vh 10vh black;
 }
