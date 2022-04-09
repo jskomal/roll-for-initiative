@@ -38,6 +38,18 @@ interface MonsterActions {
   attackDmg: string
 }
 
+interface fetchMonsterAction {
+  attack_bonus: number
+  damage: Damage[]
+  desc: string
+  name: string
+}
+
+interface Damage {
+  damage_dice: string
+  damage_type: object
+}
+
 export class App extends Component<Props, State> {
   constructor(props: any) {
     super(props)
@@ -111,7 +123,13 @@ export class App extends Component<Props, State> {
             name: monsterData.name,
             HP: monsterData.hit_points,
             AC: monsterData.armor_class,
-            actions: monsterData.actions
+            actions: monsterData.actions.map((action: fetchMonsterAction) => {
+              return {
+                attackName: action.name,
+                toHit: action.attack_bonus,
+                attackDmg: action.damage.map((damageItem) => damageItem.damage_dice)
+              }
+            })
           }
           this.setState({ monsters: [...this.state.monsters, newMonster] })
         })
