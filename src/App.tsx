@@ -149,7 +149,7 @@ export class App extends Component<Props, State> {
           </section>
         </Route>
         <Route exact path='/character-select'>
-          <CharacterView />
+          <CharacterView characters={this.state.characters}/>
         </Route>
       </Switch>
     )
