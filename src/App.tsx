@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, Route, Switch } from 'react-router-dom'
 import { fetchAPI } from './ApiCalls'
 import './App.css'
 import CharacterView from './components/CharacterView/CharacterView'
 import welcomeGif from './images/rainruins.gif'
+import { CharacterData } from './CharacterData'
+
 
 interface Props {}
 
@@ -14,7 +16,7 @@ interface State {
 }
 
 interface CharacterStats {
-  class: string
+  DnDClass: string
   name: string
   HP: number
   AC: number
@@ -22,6 +24,7 @@ interface CharacterStats {
   weaponDmg: string
   toHit: number
   initiative: number
+  bonusDmg : number
   specialAbility: string
 }
 
@@ -50,57 +53,19 @@ interface Damage {
   damage_type: object
 }
 
-export class App extends Component<Props, State> {
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      characters: [
-        {
-          class: 'fighter',
-          name: 'Bob',
-          HP: 28,
-          AC: 17,
-          weapon: 'warhammer',
-          weaponDmg: '1d10',
-          toHit: 5,
-          initiative: 2,
-          specialAbility: 'Multiattack: Once per three turns, you may attack twice'
-        },
-        {
-          class: 'cleric',
-          name: 'Brea',
-          HP: 24,
-          AC: 18,
-          weapon: 'mace',
-          weaponDmg: '1d8',
-          toHit: 5,
-          initiative: 1,
-          specialAbility:
-            'Healing Word: Once per three turns, you may use this bonus action which regains 1d4+2 HP'
-        },
-        {
-          class: 'rogue',
-          name: 'Swashbuckler Sam',
-          HP: 18,
-          AC: 14,
-          weapon: 'dagger',
-          weaponDmg: '1d4',
-          toHit: 5,
-          initiative: 6,
-          specialAbility:
-            'Cunning Dodge: Once per three turns, you may use this bonus action to negate half the damage from the next attack'
-        }
-      ],
-      monsters: [],
-      errorMsg: ''
-    }
-  }
+export const App = () => {
 
-  componentDidMount() {
-    this.fetchMonsters()
-  }
 
-  fetchMonsters = () => {
+    const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
+    const [monsters, setMonsters] = useState<MonsterStats[]>([])
+    const [errorMessage, setErrorMessage] = useState<string>('')
+
+
+  useEffect(() => {
+    fetchMonsters()
+  }, [])
+
+  const fetchMonsters = () => {
     const monsters = [
       'monsters/bat',
       'monsters/goblin',
@@ -113,7 +78,7 @@ export class App extends Component<Props, State> {
       fetchAPI(monsterPath)
         .then((res) => {
           if (!res.ok) {
-            this.setState({ errorMsg: 'Something went wrong, please try again later!' })
+            setErrorMessage('Something went wrong, please try again later!')
           } else {
             return res.json()
           }
@@ -131,29 +96,28 @@ export class App extends Component<Props, State> {
               }
             })
           }
-          this.setState({ monsters: [...this.state.monsters, newMonster] })
+          setMonsters((previousMonsters) => [...previousMonsters, newMonster])
         })
     })
   }
 
-  render() {
-    return (
-      <Switch>
-        <Route exact path='/'>
-          <section className='welcome-view'>
-            <img className='welcome-gif' src={welcomeGif} alt='Rainy ruins' />
-            <h1 className='main-title'>hail and well met, traveler...</h1>
-            <Link to='/character-select'>
-              <button className='enter-button'>roll for initiative</button>
-            </Link>
-          </section>
-        </Route>
-        <Route exact path='/character-select'>
-          <CharacterView characters={this.state.characters}/>
-        </Route>
-      </Switch>
-    )
-  }
+
+  return (
+    <Switch>
+      <Route exact path='/'>
+        <section className='welcome-view'>
+          <img className='welcome-gif' src={welcomeGif} alt='Rainy ruins' />
+          <h1 className='main-title'>hail and well met, traveler...</h1>
+          <Link to='/character-select'>
+            <button className='enter-button'>roll for initiative</button>
+          </Link>
+        </section>
+      </Route>
+      <Route exact path='/character-select'>
+        <CharacterView characters={characters}/>
+      </Route>
+    </Switch>
+  )
 }
 
 export default App
