@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './CharacterView.css'
 import CharacterCard from '../CharacterCard/CharacterCard'
 import { CharacterStats } from '../../App'
 
 const CharacterView = ({ characters } : { characters : CharacterStats[]}) => {
+  const [isClicked, setIsClicked] = useState<boolean>(false)
+  const toggleDetails = () => {setIsClicked(previousState => !previousState)}
   const characterCards = characters.map(character => {
     return <CharacterCard
       DnDClass={character.DnDClass}
@@ -17,6 +19,9 @@ const CharacterView = ({ characters } : { characters : CharacterStats[]}) => {
       bonusDmg={character.bonusDmg}
       specialAbility={character.specialAbility}
       portrait={character.portrait}
+      isClicked={isClicked}
+      toggleDetails={toggleDetails}
+      onClick={toggleDetails}
       />
   })
   
