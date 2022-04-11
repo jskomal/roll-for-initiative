@@ -15,7 +15,7 @@ interface State {
   errorMsg: string
 }
 
-interface CharacterStats {
+export interface CharacterStats {
   DnDClass: string
   name: string
   HP: number
@@ -26,6 +26,7 @@ interface CharacterStats {
   initiative: number
   bonusDmg : number
   specialAbility: string
+  portrait: string
 }
 
 interface MonsterStats {
