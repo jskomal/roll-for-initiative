@@ -1,3 +1,8 @@
+import Fighter from './images/Fighter.png'
+import Cleric from './images/Cleric.png'
+import Rogue from './images/Rogue.png'
+
+
 export const CharacterData = [
   {
     DnDClass: 'Fighter',
@@ -9,7 +14,8 @@ export const CharacterData = [
     toHit: 5,
     initiative: 2,
     bonusDmg: 3,
-    specialAbility: 'Multiattack: Once per three turns, you may attack twice'
+    specialAbility: 'Multiattack: Once per three turns, you may attack twice',
+    portrait: Fighter
   },
   {
     DnDClass: 'Cleric',
@@ -22,7 +28,8 @@ export const CharacterData = [
     initiative: 1,
     bonusDmg: 3,
     specialAbility:
-      'Healing Word: Once per three turns, you may use this bonus action which regains 1d4+2 HP'
+      'Healing Word: Once per three turns, you may use this bonus action which regains 1d4+2 HP',
+    portrait: Cleric
   },
   {
     DnDClass: 'Rogue',
@@ -35,6 +42,7 @@ export const CharacterData = [
     initiative: 6,
     bonusDmg: 3,
     specialAbility:
-      'Cunning Dodge: Once per three turns, you may use this bonus action to negate half the damage from the next attack'
+      'Cunning Dodge: Once per three turns, you may use this bonus action to negate half the damage from the next attack',
+      portrait: Rogue
   }
 ]

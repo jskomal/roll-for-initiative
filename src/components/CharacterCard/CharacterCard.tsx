@@ -1,9 +1,14 @@
 import React from 'react'
 import './CharacterCard.css'
+import { CharacterStats } from '../../App'
 
-const CharacterCard = () => {
+const CharacterCard = ({ DnDClass, name, HP, AC, weapon, weaponDmg, toHit, initiative, bonusDmg, specialAbility, portrait } : CharacterStats) => {
   return (
-    <h1>hello</h1>
+    <section className='character-card'>
+      <img src={portrait} alt={`${name} portrait`}/>
+      <h1 className='champion-name'>{name}</h1>
+      <h2 className='champion-class'>{DnDClass}</h2>
+    </section>
   )
 }
 
