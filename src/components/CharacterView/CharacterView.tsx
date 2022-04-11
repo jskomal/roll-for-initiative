@@ -1,4 +1,5 @@
 import React from 'react'
+import './CharacterView.css'
 import CharacterCard from '../CharacterCard/CharacterCard'
 import { CharacterStats } from '../../App'
 

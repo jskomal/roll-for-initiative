@@ -1,0 +1,29 @@
+.character-card {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  border-radius: 1em;
+  background-color: var(--lighter-blue);
+  border: 4px solid #011d33;
+  padding: 1rem;
+  box-shadow: 0 0 1vh rgba(0, 0, 0, 0.55);
+}
+
+.character-card img {
+  height: 35vh;
+  object-fit: cover;
+  background: radial-gradient(circle, #00000089 0%, #012b4700 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00000065;
+  margin: 1rem 0;
+  transition: all 200ms ease-in-out;
+}
+
+.character-card:hover {
+  transform: scale(1.05);
+  transition: all 200ms ease-in-out;
+}
+
