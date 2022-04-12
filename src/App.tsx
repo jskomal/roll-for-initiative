@@ -1,67 +1,67 @@
-import { useState, useEffect } from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
-import { fetchAPI } from './ApiCalls';
-import './App.css';
-import CharacterView from './components/CharacterView/CharacterView';
-import welcomeGif from './images/rainruins.gif';
-import { CharacterData } from './CharacterData';
+import { useState, useEffect } from 'react'
+import { Link, Route, Switch } from 'react-router-dom'
+import { fetchAPI } from './ApiCalls'
+import './App.css'
+import CharacterView from './components/CharacterView/CharacterView'
+import welcomeGif from './images/rainruins.gif'
+import { CharacterData } from './CharacterData'
 
 interface Props {}
 
 interface State {
-  characters: CharacterStats[];
-  monsters: MonsterStats[];
-  errorMsg: string;
+  characters: CharacterStats[]
+  monsters: MonsterStats[]
+  errorMsg: string
 }
 
 export interface CharacterStats {
-  id: number;
-  DnDClass: string;
-  name: string;
-  HP: number;
-  AC: number;
-  weapon: string;
-  weaponDmg: string;
-  toHit: number;
-  initiative: number;
-  bonusDmg: number;
-  specialAbility: string;
-  portrait: string;
+  id: number
+  DnDClass: string
+  name: string
+  HP: number
+  AC: number
+  weapon: string
+  weaponDmg: string
+  toHit: number
+  initiative: number
+  bonusDmg: number
+  specialAbility: string
+  portrait: string
 }
 
 interface MonsterStats {
-  name: string;
-  HP: number;
-  AC: number;
-  actions: MonsterActions[];
+  name: string
+  HP: number
+  AC: number
+  actions: MonsterActions[]
 }
 
 interface MonsterActions {
-  attackName: string;
-  toHit: number;
-  attackDmg: string;
+  attackName: string
+  toHit: number
+  attackDmg: string
 }
 
 interface fetchMonsterAction {
-  attack_bonus: number;
-  damage: Damage[];
-  desc: string;
-  name: string;
+  attack_bonus: number
+  damage: Damage[]
+  desc: string
+  name: string
 }
 
 interface Damage {
-  damage_dice: string;
-  damage_type: object;
+  damage_dice: string
+  damage_type: object
 }
 
 export const App = () => {
-  const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData);
-  const [monsters, setMonsters] = useState<MonsterStats[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
+  const [monsters, setMonsters] = useState<MonsterStats[]>([])
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   useEffect(() => {
-    fetchMonsters();
-  }, []);
+    fetchMonsters()
+  }, [])
 
   const fetchMonsters = () => {
     const monsters = [
@@ -69,16 +69,16 @@ export const App = () => {
       'monsters/goblin',
       'monsters/gray-ooze',
       'monsters/ghoul',
-      'monsters/brown-bear',
-    ];
+      'monsters/brown-bear'
+    ]
 
     monsters.forEach((monsterPath) => {
       fetchAPI(monsterPath)
         .then((res) => {
           if (!res.ok) {
-            setErrorMessage('Something went wrong, please try again later!');
+            setErrorMessage('Something went wrong, please try again later!')
           } else {
-            return res.json();
+            return res.json()
           }
         })
         .then((monsterData) => {
@@ -92,31 +92,31 @@ export const App = () => {
                 toHit: action.attack_bonus,
                 attackDmg: action.damage.map(
                   (damageItem) => damageItem.damage_dice
-                ),
-              };
-            }),
-          };
-          setMonsters((previousMonsters) => [...previousMonsters, newMonster]);
-        });
-    });
-  };
+                )
+              }
+            })
+          }
+          setMonsters((previousMonsters) => [...previousMonsters, newMonster])
+        })
+    })
+  }
 
   return (
     <Switch>
-      <Route exact path="/">
-        <section className="welcome-view">
-          <img className="welcome-gif" src={welcomeGif} alt="Rainy ruins" />
-          <h1 className="main-title">hail and well met, traveler...</h1>
-          <Link to="/character-select">
-            <button className="enter-button">roll for initiative</button>
+      <Route exact path='/'>
+        <section className='welcome-view'>
+          <img className='welcome-gif' src={welcomeGif} alt='Rainy ruins' />
+          <h1 className='main-title'>hail and well met, traveler...</h1>
+          <Link to='/character-select'>
+            <button className='enter-button'>roll for initiative</button>
           </Link>
         </section>
       </Route>
-      <Route exact path="/character-select">
+      <Route exact path='/character-select'>
         <CharacterView characters={characters} />
       </Route>
     </Switch>
-  );
-};
+  )
+}
 
-export default App;
+export default App

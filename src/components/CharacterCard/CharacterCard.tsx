@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import './CharacterCard.css';
-import { CharacterStats } from '../../App';
+import { useState } from 'react'
+import './CharacterCard.css'
+import { CharacterStats } from '../../App'
 
 interface CharacterCardProps extends CharacterStats {}
 
@@ -16,21 +16,21 @@ const CharacterCard = ({
   initiative,
   bonusDmg,
   specialAbility,
-  portrait,
+  portrait
 }: CharacterCardProps) => {
-  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [isClicked, setIsClicked] = useState<boolean>(false)
 
   const toggleDetails = () => {
-    setIsClicked(!isClicked);
-  };
+    setIsClicked(!isClicked)
+  }
 
   return (
     <section className={`${name}-card character-card`} onClick={toggleDetails}>
       {!isClicked && <img src={portrait} alt={`${name} portrait`} />}
-      <h1 className="champion-name">{name}</h1>
-      <h2 className="champion-class">{DnDClass}</h2>
+      <h1 className='champion-name'>{name}</h1>
+      <h2 className='champion-class'>{DnDClass}</h2>
       {isClicked && (
-        <div className="champion-details">
+        <div className='champion-details'>
           <h3>Hit Points: {HP}</h3>
           <h3>Armor Class: {AC}</h3>
           <h3>Weapon: {weapon}</h3>
@@ -42,7 +42,7 @@ const CharacterCard = ({
         </div>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default CharacterCard;
+export default CharacterCard
