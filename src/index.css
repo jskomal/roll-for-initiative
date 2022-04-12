@@ -44,6 +44,7 @@ h6,
 button {
   color: var(--text-color);
   overflow-wrap: break-word;
+  text-shadow: 3px 3px black;
 }
 #root,
 #__next {
