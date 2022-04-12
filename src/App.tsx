@@ -3,6 +3,7 @@ import { Link, Route, Switch } from 'react-router-dom'
 import { fetchAPI } from './ApiCalls'
 import './App.css'
 import CharacterView from './components/CharacterView/CharacterView'
+import BattleGround from './components/BattleGround/BattleGround'
 import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
 
@@ -113,6 +114,9 @@ export const App = () => {
       </Route>
       <Route exact path='/character-select'>
         <CharacterView characters={characters} />
+      </Route>
+      <Route exact path='/battle-ground'>
+        <BattleGround />
       </Route>
     </Switch>
   )
