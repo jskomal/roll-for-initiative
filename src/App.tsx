@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, Route, Switch } from 'react-router-dom'
 import { fetchAPI } from './ApiCalls'
 import './App.css'
 import CharacterView from './components/CharacterView/CharacterView'
 import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
-
 
 interface Props {}
 
@@ -16,6 +15,7 @@ interface State {
 }
 
 export interface CharacterStats {
+  id: number
   DnDClass: string
   name: string
   HP: number
@@ -24,7 +24,7 @@ export interface CharacterStats {
   weaponDmg: string
   toHit: number
   initiative: number
-  bonusDmg : number
+  bonusDmg: number
   specialAbility: string
   portrait: string
 }
@@ -55,12 +55,9 @@ interface Damage {
 }
 
 export const App = () => {
-
-
-    const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
-    const [monsters, setMonsters] = useState<MonsterStats[]>([])
-    const [errorMessage, setErrorMessage] = useState<string>('')
-
+  const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
+  const [monsters, setMonsters] = useState<MonsterStats[]>([])
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   useEffect(() => {
     fetchMonsters()
@@ -93,7 +90,9 @@ export const App = () => {
               return {
                 attackName: action.name,
                 toHit: action.attack_bonus,
-                attackDmg: action.damage.map((damageItem) => damageItem.damage_dice)
+                attackDmg: action.damage.map(
+                  (damageItem) => damageItem.damage_dice
+                )
               }
             })
           }
@@ -101,7 +100,6 @@ export const App = () => {
         })
     })
   }
-
 
   return (
     <Switch>
@@ -115,7 +113,7 @@ export const App = () => {
         </section>
       </Route>
       <Route exact path='/character-select'>
-        <CharacterView characters={characters}/>
+        <CharacterView characters={characters} />
       </Route>
     </Switch>
   )

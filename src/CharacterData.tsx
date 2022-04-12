@@ -5,6 +5,7 @@ import Rogue from './images/Rogue.png'
 
 export const CharacterData = [
   {
+    id: 1,
     DnDClass: 'Fighter',
     name: 'Ragnar Hammerbane',
     HP: 28,
@@ -18,6 +19,7 @@ export const CharacterData = [
     portrait: Fighter
   },
   {
+    id: 2,
     DnDClass: 'Cleric',
     name: 'Zinyrae the Holy',
     HP: 24,
@@ -32,6 +34,7 @@ export const CharacterData = [
     portrait: Cleric
   },
   {
+    id: 3,
     DnDClass: 'Rogue',
     name: 'Vaara Nightblade',
     HP: 18,
@@ -43,6 +46,6 @@ export const CharacterData = [
     bonusDmg: 3,
     specialAbility:
       'Cunning Dodge: Once per three turns, you may use this bonus action to negate half the damage from the next attack',
-      portrait: Rogue
+    portrait: Rogue
   }
 ]

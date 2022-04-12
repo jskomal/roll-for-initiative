@@ -1,36 +1,36 @@
-import React, {useState} from 'react'
-import './CharacterView.css'
-import CharacterCard from '../CharacterCard/CharacterCard'
 import { CharacterStats } from '../../App'
+import CharacterCard from '../CharacterCard/CharacterCard'
+import './CharacterView.css'
 
-const CharacterView = ({ characters } : { characters : CharacterStats[]}) => {
-  const [isClicked, setIsClicked] = useState<boolean>(false)
-  const toggleDetails = () => {setIsClicked(previousState => !previousState)}
-  const characterCards = characters.map(character => {
-    return <CharacterCard
-      DnDClass={character.DnDClass}
-      name={character.name}
-      HP={character.HP}
-      AC={character.AC}
-      weapon={character.weapon}
-      weaponDmg={character.weaponDmg}
-      toHit={character.toHit}
-      initiative={character.initiative}
-      bonusDmg={character.bonusDmg}
-      specialAbility={character.specialAbility}
-      portrait={character.portrait}
-      isClicked={isClicked}
-      toggleDetails={toggleDetails}
-      onClick={toggleDetails}
+interface CharacterViewProps {
+  characters: CharacterStats[]
+}
+
+const CharacterView = ({ characters }: CharacterViewProps) => {
+  const characterCards = characters.map((character) => {
+    return (
+      <CharacterCard
+        key={character.id.toString()}
+        id={character.id}
+        DnDClass={character.DnDClass}
+        name={character.name}
+        HP={character.HP}
+        AC={character.AC}
+        weapon={character.weapon}
+        weaponDmg={character.weaponDmg}
+        toHit={character.toHit}
+        initiative={character.initiative}
+        bonusDmg={character.bonusDmg}
+        specialAbility={character.specialAbility}
+        portrait={character.portrait}
       />
+    )
   })
-  
+
   return (
-    <section className="character-page">
+    <section className='character-page'>
       <h1 className='choose-text'>Choose your champion!</h1>
-      <div className='character-container'>
-        {characterCards}
-      </div>
+      <div className='character-container'>{characterCards}</div>
     </section>
   )
 }
