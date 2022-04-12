@@ -25,6 +25,7 @@ export interface CharacterStats {
   toHit: number
   initiative: number
   bonusDmg: number
+  attackRoll: string[]
   specialAbility: string
   portrait: string
 }

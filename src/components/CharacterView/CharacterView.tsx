@@ -21,6 +21,7 @@ const CharacterView = ({ characters }: CharacterViewProps) => {
         toHit={character.toHit}
         initiative={character.initiative}
         bonusDmg={character.bonusDmg}
+        attackRoll={character.attackRoll}
         specialAbility={character.specialAbility}
         portrait={character.portrait}
       />

@@ -15,6 +15,7 @@ const CharacterCard = ({
   toHit,
   initiative,
   bonusDmg,
+  attackRoll,
   specialAbility,
   portrait
 }: CharacterCardProps) => {
