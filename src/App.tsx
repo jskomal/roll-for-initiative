@@ -30,14 +30,14 @@ export interface CharacterStats {
   portrait: string
 }
 
-interface MonsterStats {
+export interface MonsterStats {
   name: string
   HP: number
   AC: number
   actions: MonsterActions[]
 }
 
-interface MonsterActions {
+export interface MonsterActions {
   attackName: string
   toHit: number
   attackDmg: string
