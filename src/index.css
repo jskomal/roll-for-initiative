@@ -49,8 +49,7 @@ button {
 #__next {
   isolation: isolate;
   --text-color: rgb(232, 193, 93);
-  --lighter-blue:  #1d3557;
+  --lighter-blue: #1d3557;
 }
 
 /* mobile dimensions 768 x 1024 */
-

@@ -90,9 +90,7 @@ export const App = () => {
               return {
                 attackName: action.name,
                 toHit: action.attack_bonus,
-                attackDmg: action.damage.map(
-                  (damageItem) => damageItem.damage_dice
-                )
+                attackDmg: action.damage.map((damageItem) => damageItem.damage_dice)
               }
             })
           }

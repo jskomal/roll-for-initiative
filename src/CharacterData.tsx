@@ -2,7 +2,6 @@ import Fighter from './images/Fighter.png'
 import Cleric from './images/Cleric.png'
 import Rogue from './images/Rogue.png'
 
-
 export const CharacterData = [
   {
     id: 1,
