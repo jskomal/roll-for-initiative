@@ -71,7 +71,7 @@ export const App = () => {
       'monsters/goblin',
       'monsters/gray-ooze',
       'monsters/ghoul',
-      'monsters/brown-bear'
+      'monsters/bugbear'
     ]
 
     monsters.forEach((monsterPath) => {
