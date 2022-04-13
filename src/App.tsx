@@ -60,6 +60,7 @@ export const App = () => {
   const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
   const [monsters, setMonsters] = useState<MonsterStats[]>([])
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterStats | null >(null)
 
   useEffect(() => {
     fetchMonsters()
@@ -101,6 +102,15 @@ export const App = () => {
     })
   }
 
+  const selectCharacter = (id: number) : void => { 
+    let chosenCharacter = characters.find(character => character.id === id)
+    if (chosenCharacter) {
+      setSelectedCharacter(chosenCharacter)
+    }
+    
+  }
+
+
   return (
     <Switch>
       <Route exact path='/'>
@@ -113,10 +123,10 @@ export const App = () => {
         </section>
       </Route>
       <Route exact path='/character-select'>
-        <CharacterView characters={characters} />
+        <CharacterView characters={characters} selectCharacter={selectCharacter}/>
       </Route>
       <Route exact path='/battle-ground'>
-        <BattleGround />
+        {selectedCharacter && <BattleGround selectedCharacter={selectedCharacter} />}
       </Route>
     </Switch>
   )
