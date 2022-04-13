@@ -7,24 +7,28 @@ import {
   doDamage,
   healingWord
 } from '../../battle-utils'
+import { CharacterStats } from '../../App'
 
-//------------  Temporary Hard Coded Shit ----------------------
-import { CharacterData } from '../../CharacterData'
-const currentCharacter = CharacterData[1]
+interface BattleGroundProps {
+  selectedCharacter: CharacterStats
+}
 
-interface BattleGroundProps {}
+const BattleGround = ({ selectedCharacter }: BattleGroundProps) => {
+  let player = selectedCharacter
 
-const BattleGround = () => {
-  let player = currentCharacter
-  console.log(player)
-
-  const [playerDmgRoll, setPlayerDmgRoll] = useState<string[]>(player.attackRoll)
+  const [playerDmgRoll, setPlayerDmgRoll] = useState<string[]>(
+    player.attackRoll
+  )
   const [playerHP, setPlayerHP] = useState<number>(player.HP)
   const [playerAC, setPlayerAC] = useState<number>(player.AC)
   const [playerWeapon, setPlayerWeapon] = useState<string>(player.weapon)
-  const [playerInitiative, setPlayerInitiative] = useState<number>(player.initiative)
+  const [playerInitiative, setPlayerInitiative] = useState<number>(
+    player.initiative
+  )
   const [playerToHit, setPlayerToHit] = useState<number>(player.toHit)
-  const [playerSpecial, setPlayerSpecial] = useState<string>(player.specialAbility)
+  const [playerSpecial, setPlayerSpecial] = useState<string>(
+    player.specialAbility
+  )
 
   return (
     <div>
