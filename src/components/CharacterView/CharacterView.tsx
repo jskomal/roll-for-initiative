@@ -8,7 +8,7 @@ interface CharacterViewProps {
 }
 
 const CharacterView = ({ characters, selectCharacter }: CharacterViewProps) => {
-  const characterCards = characters.map(character => {
+  const characterCards = characters.map((character) => {
     return (
       <CharacterCard
         key={character.id.toString()}
