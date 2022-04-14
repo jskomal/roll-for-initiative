@@ -6,15 +6,6 @@ import CharacterView from './components/CharacterView/CharacterView'
 import BattleGround from './components/BattleGround/BattleGround'
 import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
-import { arrayBuffer } from 'stream/consumers'
-
-interface Props {}
-
-interface State {
-  characters: CharacterStats[]
-  monsters: MonsterStats[]
-  errorMsg: string
-}
 
 export interface CharacterStats {
   id: number
@@ -61,8 +52,7 @@ export const App = () => {
   const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
   const [monsters, setMonsters] = useState<MonsterStats[]>([])
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [selectedCharacter, setSelectedCharacter] =
-    useState<CharacterStats | null>(null)
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterStats | null>(null)
 
   useEffect(() => {
     fetchMonsters()
@@ -95,9 +85,7 @@ export const App = () => {
               return {
                 attackName: action.name,
                 toHit: action.attack_bonus,
-                attackDmg: action.damage.map(
-                  (damageItem) => damageItem.damage_dice
-                )
+                attackDmg: action.damage.map((damageItem) => damageItem.damage_dice)
               }
             })
           }
@@ -125,17 +113,11 @@ export const App = () => {
         </section>
       </Route>
       <Route exact path='/character-select'>
-        <CharacterView
-          characters={characters}
-          selectCharacter={selectCharacter}
-        />
+        <CharacterView characters={characters} selectCharacter={selectCharacter} />
       </Route>
       <Route exact path='/battle-ground'>
         {selectedCharacter && monsters && (
-          <BattleGround
-            selectedCharacter={selectedCharacter}
-            monsters={monsters}
-          />
+          <BattleGround selectedCharacter={selectedCharacter} monsters={monsters} />
         )}
       </Route>
     </Switch>
