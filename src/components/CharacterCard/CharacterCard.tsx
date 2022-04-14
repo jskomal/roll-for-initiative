@@ -31,10 +31,7 @@ const CharacterCard = ({
 
   return (
     <div className={`${name}-card character-card`}>
-      <section
-        // className={`${name}-card character-card`}
-        onClick={toggleDetails}
-      >
+      <section className={'card-contents'} onClick={toggleDetails}>
         {!isClicked && <img src={portrait} alt={`${name} portrait`} />}
         <h1 className='champion-name'>{name}</h1>
         <h2 className='champion-class'>{DnDClass}</h2>
@@ -53,9 +50,7 @@ const CharacterCard = ({
       </section>
       {isClicked && (
         <Link to='/battle-ground'>
-          <button onClick={() => selectCharacter(id)}>
-            Select This Champion
-          </button>
+          <button onClick={() => selectCharacter(id)}>Select This Champion</button>
         </Link>
       )}
     </div>
