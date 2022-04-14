@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 //   healingWord
 // } from '../../battle-utils'
 import { CharacterStats, MonsterStats } from '../../App'
+import './BattleGround.css'
 
 interface BattleGroundProps {
   selectedCharacter: CharacterStats
@@ -17,10 +18,13 @@ interface BattleGroundProps {
 const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   let player = selectedCharacter
 
+  //Player variables ------------
+
   const [playerDmgRoll, setPlayerDmgRoll] = useState<string[]>(
     player.attackRoll
   )
   const [playerHP, setPlayerHP] = useState<number>(player.HP)
+  const [playerCurrentHP, setPlayerCurrentHP] = useState<number>(player.HP)
   const [playerAC, setPlayerAC] = useState<number>(player.AC)
   const [playerWeapon, setPlayerWeapon] = useState<string>(player.weapon)
   const [playerInitiative, setPlayerInitiative] = useState<number>(
@@ -31,15 +35,42 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     player.specialAbility
   )
   const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(true)
+  const [playerInitiativeRoll, setPlayerInitiativeRoll] = useState<
+    number | null
+  >(null)
+  const [playerPortrait, setPlayerPortrait] = useState<string>(player.portrait)
+
+  //Monster variables ------------
+
   const [monster, setMonster] = useState<MonsterStats | null>(null)
+  const [monsterName, setMonsterName] = useState<string | null>(null)
+  const [monsterHP, setMonsterHP] = useState<number | null>(null)
+  const [monsterCurrentHP, setMonsterCurrentHP] = useState<number | null>(null)
+  const [monsterAC, setMonsterAC] = useState<number | null>(null)
+  // const [monsterActions, setMonsterActions] = useState<number | null>(null)
+  const [monsterInitiativeRoll, setMonsterInitiativeRoll] = useState<
+    number | null
+  >(null)
 
   useEffect(() => {
     randomCritterGitter(monsters)
+    rollForInitiative()
   }, [])
+
+  useEffect(() => {
+    monster && loadMonster(monster)
+  }, [monster])
 
   const randomCritterGitter = (array: MonsterStats[]) => {
     let randomIndex = Math.floor(Math.random() * array.length)
     setMonster(array[randomIndex])
+  }
+
+  const loadMonster = (monster: MonsterStats) => {
+    monster && setMonsterName(monster.name)
+    monster && setMonsterHP(monster.HP)
+    monster && setMonsterAC(monster.AC)
+    monster && setMonsterCurrentHP(monster.HP)
   }
 
   const parseDMGInput = (DMGInput: string[]): number[] => {
@@ -49,6 +80,14 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     let sizeOfDice = parseInt(split2[0])
     let DMGBonus = parseInt(split2[1])
     return [numOfDice, sizeOfDice, DMGBonus]
+  }
+
+  const rollForInitiative = () => {
+    const playerRoll = rollDice(1, 20) + playerInitiative
+    const monsterRoll = rollDice(1, 20)
+    setIsPlayerTurn(() => (playerRoll >= monsterRoll ? true : false))
+    setPlayerInitiativeRoll(playerRoll)
+    setMonsterInitiativeRoll(monsterRoll)
   }
 
   const rollDice = (numDice: number, diceSize: number): number => {
@@ -89,9 +128,46 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   }
 
   return (
-    <div>
-      <h1>Hello!</h1>
-    </div>
+    <>
+      {monster && (
+        <div className='battleground'>
+          <div className='monster-box'>
+            <div className='monster-display'>
+              {monsterCurrentHP && monsterHP && (
+                <>
+                  <progress
+                    id='monster-hp'
+                    value={monsterCurrentHP.toString()}
+                    max={monsterHP.toString()}
+                  ></progress>
+                  <p>
+                    {monsterCurrentHP} / {monsterHP}
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+          <div className='event-log'>event log</div>
+          <div className='character-box'>
+            <div className='character-display'>
+              <progress
+                id='player-hp'
+                value={playerCurrentHP.toString()}
+                max={playerHP.toString()}
+              ></progress>
+              <p>
+                {playerCurrentHP} / {playerHP}
+              </p>
+              <img
+                className='player-portrait'
+                src={playerPortrait}
+                alt='player portrait'
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
