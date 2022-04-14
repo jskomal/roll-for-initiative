@@ -1,0 +1,56 @@
+.battleground {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  color: white;
+  padding: 1em;
+}
+
+.monster-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 40vh;
+  /* border: 1px solid yellow; */
+}
+
+/* .monster-hp-bar {
+} */
+
+.event-log {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(78, 78, 145, 0.274);
+  border-radius: 0.5rem;
+  /* border: 1px solid yellow; */
+  height: 15vh;
+}
+
+.character-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  /* border: 1px solid yellow; */
+  height: 40vh;
+}
+
+.player-portrait {
+  height: 42vh;
+  width: 25vw;
+  object-fit: cover;
+  /* border: 1px solid white; */
+}
+
+.character-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .character-hp-bar {
+} */
