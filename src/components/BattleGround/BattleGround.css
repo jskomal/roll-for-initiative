@@ -16,6 +16,24 @@
   /* border: 1px solid yellow; */
 }
 
+.monster-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5vw;
+}
+
+.monster-img {
+  height: 25vh;
+  margin-bottom: 5.5vh;
+  margin-top: 2vh;
+}
+
+.monster-name{
+  margin-top: 2vh;
+}
+
 /* .monster-hp-bar {
 } */
 
@@ -32,7 +50,7 @@
 
 .character-box {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: flex-start;
   align-items: flex-start;
   /* border: 1px solid yellow; */
@@ -41,15 +59,36 @@
 
 .player-portrait {
   height: 42vh;
-  width: 25vw;
+  /* width: 30vw; */
   object-fit: cover;
   /* border: 1px solid white; */
 }
+
+/* .player-hp {
+
+} */
 
 .character-display {
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* margin-top: 1vh; */
+}
+
+.attack-button {
+  align-self: center;
+  height: 7vh;
+  margin: 0rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.button-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 40vh;
+  align-items: center;
+  /* border:solid red; */
 }
 
 /* .character-hp-bar {
