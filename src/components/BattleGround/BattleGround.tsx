@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-// import {
-//   rollDice,
-//   rollToHit,
-//   checkForHit,
-//   rollDamage,
-//   doDamage,
-//   healingWord
-// } from '../../battle-utils'
+import {
+  rollDice,
+  rollToHit,
+  checkForHit,
+  rollDamage,
+  doDamage
+} from '../../battle-utils'
 import { CharacterStats, MonsterActions, MonsterStats } from '../../App'
 import './BattleGround.css'
 import ghoul from '../../images/Ghoul.png'
@@ -25,26 +24,16 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
 
   //Player variables ------------
 
-  const [playerDmgRoll, setPlayerDmgRoll] = useState<string[]>(
-    player.attackRoll
-  )
+  const [playerDmgRoll, setPlayerDmgRoll] = useState<string[]>(player.attackRoll)
   const [playerHP, setPlayerHP] = useState<number>(player.HP)
   const [playerCurrentHP, setPlayerCurrentHP] = useState<number>(player.HP)
   const [playerAC, setPlayerAC] = useState<number>(player.AC)
   const [playerWeapon, setPlayerWeapon] = useState<string>(player.weapon)
-  const [playerInitiative, setPlayerInitiative] = useState<number>(
-    player.initiative
-  )
+  const [playerInitiative, setPlayerInitiative] = useState<number>(player.initiative)
   const [playerToHit, setPlayerToHit] = useState<number>(player.toHit)
-  const [playerSpecial, setPlayerSpecial] = useState<string>(
-    player.specialAbility
-  )
-  const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(true)
-  const [playerInitiativeRoll, setPlayerInitiativeRoll] = useState<
-    number | null
-  >(null)
+  const [playerSpecial, setPlayerSpecial] = useState<string>(player.specialAbility)
+  const [playerInitiativeRoll, setPlayerInitiativeRoll] = useState<number | null>(null)
   const [playerPortrait, setPlayerPortrait] = useState<string>(player.portrait)
-  const [turnCount, setTurnCount] = useState<number>(0)
 
   //Monster variables ------------
 
@@ -53,34 +42,32 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   const [monsterHP, setMonsterHP] = useState<number | null>(null)
   const [monsterCurrentHP, setMonsterCurrentHP] = useState<number | null>(null)
   const [monsterAC, setMonsterAC] = useState<number | null>(null)
-  const [monsterActions, setMonsterActions] = useState<MonsterActions[] | null>(
-    null
-  )
-  const [monsterInitiativeRoll, setMonsterInitiativeRoll] = useState<
-    number | null
-  >(null)
+  const [monsterActions, setMonsterActions] = useState<MonsterActions[] | null>(null)
+  const [monsterInitiativeRoll, setMonsterInitiativeRoll] = useState<number | null>(null)
   const [monsterPortrait, setMonsterPortrait] = useState<string>('')
 
+  // Globals ------------
+
+  const [isPlayerTurn, setIsPlayerTurn] = useState<boolean | null>(null)
+  const [turnCount, setTurnCount] = useState<number>(0)
   const [isEndGame, setIsEndGame] = useState<boolean>(false)
   const [eventLog, setEventLog] = useState<string>(' ')
+  const [isGameStarted, setIsGameStarted] = useState<boolean>(false)
 
   useEffect(() => {
     randomCritterGitter(monsters)
-    rollForInitiative()
-    // setTimeout(loadMonsterPortrait(), 200)
   }, [])
 
   useEffect(() => {
     monster && loadMonster(monster)
-   
   }, [monster])
 
-  useEffect(() => { 
-    loadMonsterPortrait()
-  }, [monsterName !== null]) 
+  useEffect(() => {
+    monsterName && loadMonsterPortrait()
+  }, [monsterName])
 
   useEffect(() => {
-    if (!isPlayerTurn && !isEndGame) {
+    if (!isPlayerTurn && !isEndGame && isGameStarted) {
       setEventLog('Monster is attacking...')
       setTimeout(monsterAttack, 2000)
     }
@@ -89,12 +76,10 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   useEffect(() => {
     checkEndGame()
     if (!isEndGame) {
-      setIsPlayerTurn(previousState => !previousState)
-      // setEventLog('Choose your attack')
+      setIsPlayerTurn((previousState) => !previousState)
+      setEventLog('Choose your attack')
     }
   }, [turnCount])
-
-  
 
   const randomCritterGitter = (array: MonsterStats[]) => {
     let randomIndex = Math.floor(Math.random() * array.length)
@@ -110,9 +95,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   }
 
   const loadMonsterPortrait = () => {
-    console.log('find portraint here')
     if (monster) {
-      console.log(monsterName)
       switch (monsterName) {
         case 'Ghoul':
           setMonsterPortrait(ghoul)
@@ -132,86 +115,64 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     }
   }
 
-  const parseDMGInput = (DMGInput: string[]): number[] => {
-    let split1 = DMGInput[0].split('d')
-    let split2 = split1[1].split('+')
-    let numOfDice = parseInt(split1[0])
-    let sizeOfDice = parseInt(split2[0])
-    let DMGBonus = parseInt(split2[1])
-    return [numOfDice, sizeOfDice, DMGBonus || 0]
-  }
-
   const rollForInitiative = () => {
     const playerRoll = rollDice(1, 20) + playerInitiative
     const monsterRoll = rollDice(1, 20)
     setIsPlayerTurn(() => (playerRoll >= monsterRoll ? true : false))
     setPlayerInitiativeRoll(playerRoll)
     setMonsterInitiativeRoll(monsterRoll)
-  }
-
-  const rollDice = (numDice: number, diceSize: number): number => {
-    let sum = 0
-    for (let i = 0; i < numDice; i++) {
-      sum += Math.floor(Math.random() * diceSize) + 1
-    }
-    return sum
-  }
-
-  const rollToHit = (toHit: number): number => {
-    return rollDice(1, 20) + toHit
-  }
-
-  const checkForHit = (rollToHitResult: number, targetAC: number): boolean => {
-    return rollToHitResult >= targetAC ? true : false
-  }
-
-  const rollDamage = (DMGInput: string[]): number => {
-    let dice = parseDMGInput(DMGInput)
-    return rollDice(dice[0], dice[1]) + dice[2]
-  }
-
-  const doDamage = (totalDamage: number, targetHP: number): number => {
-    return targetHP - totalDamage
+    console.log(`player init: ${playerRoll}, monster: ${monsterRoll}`)
+    setIsGameStarted(true)
   }
 
   const playerAttack = () => {
     if (!isEndGame) {
-      console.log('fired')
+      console.log('player attack')
       if (monsterAC && monsterCurrentHP) {
         const ATKSuccess = rollToHit(playerToHit)
         if (checkForHit(ATKSuccess, monsterAC)) {
-          console.log('hit')
+          console.log('player hit')
           let damage = rollDamage(playerDmgRoll)
+          console.log(`player damage: ${damage}`)
           let newHP = doDamage(damage, monsterCurrentHP)
+          setEventLog(
+            `your roll: ${ATKSuccess} vs AC: ${monsterAC}, you hit for ${damage} damage!`
+          )
           setMonsterCurrentHP(newHP)
+        } else {
+          setEventLog(`your roll: ${ATKSuccess} vs AC: ${monsterAC}, you miss!`)
+          console.log('player miss')
         }
-        // checkEndGame()
-        // if (!isEndGame) {
-        //   setIsPlayerTurn(false)
-        // }
       }
-      setTurnCount(previous => previous + 1)
+      setTimeout(() => {
+        setTurnCount((previous) => previous + 1)
+      }, 3000)
     }
   }
 
   const monsterAttack = () => {
-    if (!isEndGame) {
+    if (!isEndGame && !isPlayerTurn) {
       if (monsterActions) {
+        console.log('monster attacks')
         const index = rollDice(1, monsterActions.length) - 1
         const attack = monsterActions[index]
-        const ATKSuccess = rollToHit(attack.toHit) + 5
+        const ATKSuccess = rollToHit(attack.toHit) + 5 // buffed here
         if (checkForHit(ATKSuccess, playerAC)) {
           let damage = rollDamage(attack.attackDmg)
+          console.log(`monster damage: ${damage}`)
           let newHP = doDamage(damage, playerCurrentHP)
+          setEventLog(
+            `monster roll: ${ATKSuccess} vs your AC: ${playerAC}, they hit for ${damage} damage!`
+          )
           setPlayerCurrentHP(newHP)
+        } else {
+          setEventLog(`monster roll: ${ATKSuccess} vs your AC: ${playerAC}, they missed!`)
+          console.log('monster miss')
         }
       }
-      setTurnCount(previous => previous + 1)
-      // checkEndGame()
-      // if (!isEndGame) {
-      //   setIsPlayerTurn(true)
-      //   setEventLog('Choose your attack')
-      // }
+      setTimeout(() => {
+        setTurnCount((previous) => previous + 1)
+      }, 3000)
     }
   }
 
@@ -220,11 +181,11 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
       if (monsterCurrentHP <= 0) {
         setIsEndGame(true)
         setEventLog('You Won')
-        console.log('player')
+        console.log('player won')
       } else if (playerCurrentHP <= 0) {
         setIsEndGame(true)
         setEventLog('Monster Won')
-        console.log('monster')
+        console.log('monster won')
       }
     }
   }
@@ -251,7 +212,12 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
               )}
             </div>
           </div>
-          <div className='event-log'>{eventLog}</div>
+          <div className='event-log'>
+            <p>{eventLog}</p>
+            {!isGameStarted && (
+              <button onClick={rollForInitiative}>roll for initiative</button>
+            )}
+          </div>
           <div className='character-box'>
             <div className='character-display'>
               <progress
