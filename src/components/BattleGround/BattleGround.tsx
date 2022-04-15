@@ -13,6 +13,7 @@ import direwolf from '../../images/Direwolf.png'
 import goblin from '../../images/Goblin.png'
 import bugbear from '../../images/Bugbear.png'
 import zombie from '../../images/Zombie.png'
+import { Redirect } from 'react-router-dom'
 
 interface BattleGroundProps {
   selectedCharacter: CharacterStats
@@ -50,7 +51,8 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
 
   const [isPlayerTurn, setIsPlayerTurn] = useState<boolean | null>(null)
   const [turnCount, setTurnCount] = useState<number>(0)
-  const [isEndGame, setIsEndGame] = useState<boolean>(false)
+  const [isMonsterEndGame, setIsMonsterEndGame] = useState<boolean>(false)
+  const [isPlayerEndGame, setIsPlayerEndGame] = useState<boolean>(false)
   const [eventLog, setEventLog] = useState<string>(' ')
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false)
 
@@ -67,7 +69,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   }, [monsterName])
 
   useEffect(() => {
-    if (!isPlayerTurn && !isEndGame && isGameStarted) {
+    if (!isPlayerTurn && !isMonsterEndGame && !isPlayerEndGame && isGameStarted) {
       setEventLog('Monster is attacking...')
       setTimeout(monsterAttack, 2000)
     }
@@ -75,7 +77,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
 
   useEffect(() => {
     checkEndGame()
-    if (!isEndGame) {
+    if (!isMonsterEndGame && !isPlayerEndGame) {
       setIsPlayerTurn((previousState) => !previousState)
       setEventLog('Choose your attack')
     }
@@ -111,6 +113,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
           break
         case 'Bugbear':
           setMonsterPortrait(bugbear)
+          break
       }
     }
   }
@@ -126,7 +129,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   }
 
   const playerAttack = () => {
-    if (!isEndGame) {
+    if (!isMonsterEndGame && !isPlayerEndGame) {
       console.log('player attack')
       if (monsterAC && monsterCurrentHP) {
         const ATKSuccess = rollToHit(playerToHit)
@@ -151,7 +154,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   }
 
   const monsterAttack = () => {
-    if (!isEndGame && !isPlayerTurn) {
+    if (!isMonsterEndGame && !isPlayerEndGame && !isPlayerTurn) {
       if (monsterActions) {
         console.log('monster attacks')
         const index = rollDice(1, monsterActions.length) - 1
@@ -181,11 +184,11 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   const checkEndGame = () => {
     if (monsterCurrentHP || monsterCurrentHP === 0) {
       if (monsterCurrentHP <= 0) {
-        setIsEndGame(true)
+        setIsPlayerEndGame(true)
         setEventLog('You Won')
         console.log('player won')
       } else if (playerCurrentHP <= 0) {
-        setIsEndGame(true)
+        setIsMonsterEndGame(true)
         setEventLog('Monster Won')
         console.log('monster won')
       }
@@ -249,6 +252,8 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
               </button>
             </div>
           </div>
+          {isMonsterEndGame && <Redirect to="/monster-end-game" ></Redirect>}
+          {isPlayerEndGame && <Redirect to="/player-end-game" ></Redirect>}
         </div>
       )}
     </>
