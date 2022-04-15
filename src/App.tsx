@@ -3,16 +3,11 @@ import { Link, Route, Switch } from 'react-router-dom'
 import { fetchAPI } from './ApiCalls'
 import './App.css'
 import CharacterView from './components/CharacterView/CharacterView'
+import BattleGround from './components/BattleGround/BattleGround'
+import PlayerEndGameScreen from './components/PlayerEndGameScreen/PlayerEndGameScreen'
+import MonsterEndGameScreen from './components/MonsterEndGameScreen/MonsterEndGameScreen'
 import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
-
-interface Props {}
-
-interface State {
-  characters: CharacterStats[]
-  monsters: MonsterStats[]
-  errorMsg: string
-}
 
 export interface CharacterStats {
   id: number
@@ -25,21 +20,22 @@ export interface CharacterStats {
   toHit: number
   initiative: number
   bonusDmg: number
+  attackRoll: string[]
   specialAbility: string
   portrait: string
 }
 
-interface MonsterStats {
+export interface MonsterStats {
   name: string
   HP: number
   AC: number
   actions: MonsterActions[]
 }
 
-interface MonsterActions {
+export interface MonsterActions {
   attackName: string
   toHit: number
-  attackDmg: string
+  attackDmg: string[]
 }
 
 interface fetchMonsterAction {
@@ -58,6 +54,7 @@ export const App = () => {
   const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
   const [monsters, setMonsters] = useState<MonsterStats[]>([])
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterStats | null>(null)
 
   useEffect(() => {
     fetchMonsters()
@@ -65,11 +62,11 @@ export const App = () => {
 
   const fetchMonsters = () => {
     const monsters = [
-      'monsters/bat',
+      'monsters/zombie',
       'monsters/goblin',
-      'monsters/gray-ooze',
+      'monsters/dire-wolf',
       'monsters/ghoul',
-      'monsters/brown-bear'
+      'monsters/bugbear'
     ]
 
     monsters.forEach((monsterPath) => {
@@ -90,15 +87,20 @@ export const App = () => {
               return {
                 attackName: action.name,
                 toHit: action.attack_bonus,
-                attackDmg: action.damage.map(
-                  (damageItem) => damageItem.damage_dice
-                )
+                attackDmg: action.damage.map((damageItem) => damageItem.damage_dice)
               }
             })
           }
           setMonsters((previousMonsters) => [...previousMonsters, newMonster])
         })
     })
+  }
+
+  const selectCharacter = (id: number): void => {
+    let chosenCharacter = characters.find((character) => character.id === id)
+    if (chosenCharacter) {
+      setSelectedCharacter(chosenCharacter)
+    }
   }
 
   return (
@@ -113,7 +115,18 @@ export const App = () => {
         </section>
       </Route>
       <Route exact path='/character-select'>
-        <CharacterView characters={characters} />
+        <CharacterView characters={characters} selectCharacter={selectCharacter} />
+      </Route>
+      <Route exact path='/battle-ground'>
+        {selectedCharacter && monsters && (
+          <BattleGround selectedCharacter={selectedCharacter} monsters={monsters} />
+        )}
+      </Route>
+      <Route exact path='/monster-end-game'>
+          <MonsterEndGameScreen />
+      </Route>
+      <Route exact path='/player-end-game' >
+          <PlayerEndGameScreen />
       </Route>
     </Switch>
   )

@@ -2,7 +2,6 @@ import Fighter from './images/Fighter.png'
 import Cleric from './images/Cleric.png'
 import Rogue from './images/Rogue.png'
 
-
 export const CharacterData = [
   {
     id: 1,
@@ -15,6 +14,7 @@ export const CharacterData = [
     toHit: 5,
     initiative: 2,
     bonusDmg: 3,
+    attackRoll: ['1d10+3'],
     specialAbility: 'Multiattack: Once per three turns, you may attack twice',
     portrait: Fighter
   },
@@ -29,6 +29,7 @@ export const CharacterData = [
     toHit: 5,
     initiative: 1,
     bonusDmg: 3,
+    attackRoll: ['1d8+3'],
     specialAbility:
       'Healing Word: Once per three turns, you may use this bonus action which regains 1d4+2 HP',
     portrait: Cleric
@@ -44,6 +45,7 @@ export const CharacterData = [
     toHit: 5,
     initiative: 6,
     bonusDmg: 3,
+    attackRoll: ['1d4+3'],
     specialAbility:
       'Cunning Dodge: Once per three turns, you may use this bonus action to negate half the damage from the next attack',
     portrait: Rogue
