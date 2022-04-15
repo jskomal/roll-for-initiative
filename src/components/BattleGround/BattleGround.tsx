@@ -162,11 +162,13 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
           console.log(`monster damage: ${damage}`)
           let newHP = doDamage(damage, playerCurrentHP)
           setEventLog(
-            `monster roll: ${ATKSuccess} vs your AC: ${playerAC}, they hit for ${damage} damage!`
+            `${monsterName} used ${attack.attackName}: ${ATKSuccess} vs your AC: ${playerAC}, they hit for ${damage} damage!`
           )
           setPlayerCurrentHP(newHP)
         } else {
-          setEventLog(`monster roll: ${ATKSuccess} vs your AC: ${playerAC}, they missed!`)
+          setEventLog(
+            `${monsterName} used ${attack.attackName}: ${ATKSuccess} vs your AC: ${playerAC}, they missed!`
+          )
           console.log('monster miss')
         }
       }
@@ -213,7 +215,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
             </div>
           </div>
           <div className='event-log'>
-            {isGameStarted && <p>{eventLog}</p>}
+            {isGameStarted && <p className='event-log-text'>{eventLog}</p>}
             {!isGameStarted && (
               <button onClick={rollForInitiative}>roll for initiative</button>
             )}
