@@ -7,8 +7,13 @@ import { useState, useEffect } from 'react'
 //   doDamage,
 //   healingWord
 // } from '../../battle-utils'
-import { CharacterStats, MonsterStats } from '../../App'
+import { CharacterStats, MonsterActions, MonsterStats } from '../../App'
 import './BattleGround.css'
+import ghoul from '../../images/Ghoul.png'
+import direwolf from '../../images/Direwolf.png'
+import goblin from '../../images/Goblin.png'
+import bugbear from '../../images/Bugbear.png'
+import zombie from '../../images/Zombie.png'
 
 interface BattleGroundProps {
   selectedCharacter: CharacterStats
@@ -39,6 +44,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     number | null
   >(null)
   const [playerPortrait, setPlayerPortrait] = useState<string>(player.portrait)
+  const [turnCount, setTurnCount] = useState<number>(0)
 
   //Monster variables ------------
 
@@ -47,19 +53,48 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   const [monsterHP, setMonsterHP] = useState<number | null>(null)
   const [monsterCurrentHP, setMonsterCurrentHP] = useState<number | null>(null)
   const [monsterAC, setMonsterAC] = useState<number | null>(null)
-  // const [monsterActions, setMonsterActions] = useState<number | null>(null)
+  const [monsterActions, setMonsterActions] = useState<MonsterActions[] | null>(
+    null
+  )
   const [monsterInitiativeRoll, setMonsterInitiativeRoll] = useState<
     number | null
   >(null)
+  const [monsterPortrait, setMonsterPortrait] = useState<string>('')
+
+  const [isEndGame, setIsEndGame] = useState<boolean>(false)
+  const [eventLog, setEventLog] = useState<string>(' ')
 
   useEffect(() => {
     randomCritterGitter(monsters)
     rollForInitiative()
+    // setTimeout(loadMonsterPortrait(), 200)
   }, [])
 
   useEffect(() => {
     monster && loadMonster(monster)
+   
   }, [monster])
+
+  useEffect(() => { 
+    loadMonsterPortrait()
+  }, [monsterName !== null]) 
+
+  useEffect(() => {
+    if (!isPlayerTurn && !isEndGame) {
+      setEventLog('Monster is attacking...')
+      setTimeout(monsterAttack, 2000)
+    }
+  }, [isPlayerTurn])
+
+  useEffect(() => {
+    checkEndGame()
+    if (!isEndGame) {
+      setIsPlayerTurn(previousState => !previousState)
+      // setEventLog('Choose your attack')
+    }
+  }, [turnCount])
+
+  
 
   const randomCritterGitter = (array: MonsterStats[]) => {
     let randomIndex = Math.floor(Math.random() * array.length)
@@ -71,6 +106,30 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     monster && setMonsterHP(monster.HP)
     monster && setMonsterAC(monster.AC)
     monster && setMonsterCurrentHP(monster.HP)
+    monster && setMonsterActions(monster.actions)
+  }
+
+  const loadMonsterPortrait = () => {
+    console.log('find portraint here')
+    if (monster) {
+      console.log(monsterName)
+      switch (monsterName) {
+        case 'Ghoul':
+          setMonsterPortrait(ghoul)
+          break
+        case 'Goblin':
+          setMonsterPortrait(goblin)
+          break
+        case 'Dire Wolf':
+          setMonsterPortrait(direwolf)
+          break
+        case 'Zombie':
+          setMonsterPortrait(zombie)
+          break
+        case 'Bugbear':
+          setMonsterPortrait(bugbear)
+      }
+    }
   }
 
   const parseDMGInput = (DMGInput: string[]): number[] => {
@@ -79,7 +138,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     let numOfDice = parseInt(split1[0])
     let sizeOfDice = parseInt(split2[0])
     let DMGBonus = parseInt(split2[1])
-    return [numOfDice, sizeOfDice, DMGBonus]
+    return [numOfDice, sizeOfDice, DMGBonus || 0]
   }
 
   const rollForInitiative = () => {
@@ -115,16 +174,59 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     return targetHP - totalDamage
   }
 
-  // PlayerTurn sequires monster AC in place of the number 10
-
   const playerAttack = () => {
-    const ATKSuccess = rollToHit(playerToHit)
-    if (checkForHit(ATKSuccess, 10)) {
-      let damage = rollDamage(playerDmgRoll)
-      let newHP = doDamage(damage, 20)
-      // setMonsterHP(newHP)
+    if (!isEndGame) {
+      console.log('fired')
+      if (monsterAC && monsterCurrentHP) {
+        const ATKSuccess = rollToHit(playerToHit)
+        if (checkForHit(ATKSuccess, monsterAC)) {
+          console.log('hit')
+          let damage = rollDamage(playerDmgRoll)
+          let newHP = doDamage(damage, monsterCurrentHP)
+          setMonsterCurrentHP(newHP)
+        }
+        // checkEndGame()
+        // if (!isEndGame) {
+        //   setIsPlayerTurn(false)
+        // }
+      }
+      setTurnCount(previous => previous + 1)
     }
-    setIsPlayerTurn(false)
+  }
+
+  const monsterAttack = () => {
+    if (!isEndGame) {
+      if (monsterActions) {
+        const index = rollDice(1, monsterActions.length) - 1
+        const attack = monsterActions[index]
+        const ATKSuccess = rollToHit(attack.toHit) + 5
+        if (checkForHit(ATKSuccess, playerAC)) {
+          let damage = rollDamage(attack.attackDmg)
+          let newHP = doDamage(damage, playerCurrentHP)
+          setPlayerCurrentHP(newHP)
+        }
+      }
+      setTurnCount(previous => previous + 1)
+      // checkEndGame()
+      // if (!isEndGame) {
+      //   setIsPlayerTurn(true)
+      //   setEventLog('Choose your attack')
+      // }
+    }
+  }
+
+  const checkEndGame = () => {
+    if (monsterCurrentHP || monsterCurrentHP === 0) {
+      if (monsterCurrentHP <= 0) {
+        setIsEndGame(true)
+        setEventLog('You Won')
+        console.log('player')
+      } else if (playerCurrentHP <= 0) {
+        setIsEndGame(true)
+        setEventLog('Monster Won')
+        console.log('monster')
+      }
+    }
   }
 
   return (
@@ -135,6 +237,8 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
             <div className='monster-display'>
               {monsterCurrentHP && monsterHP && (
                 <>
+                  <h2 className='monster-name'>{monsterName}</h2>
+                  <img className='monster-img' src={monsterPortrait}></img>
                   <progress
                     id='monster-hp'
                     value={monsterCurrentHP.toString()}
@@ -147,7 +251,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
               )}
             </div>
           </div>
-          <div className='event-log'>event log</div>
+          <div className='event-log'>{eventLog}</div>
           <div className='character-box'>
             <div className='character-display'>
               <progress
@@ -163,6 +267,18 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
                 src={playerPortrait}
                 alt='player portrait'
               />
+            </div>
+            <div className='button-section'>
+              <button
+                className='attack-button button'
+                onClick={() => playerAttack()}
+                disabled={!isPlayerTurn}
+              >
+                Attack!
+              </button>
+              <button className='attack-button' disabled={!isPlayerTurn}>
+                Special Attack
+              </button>
             </div>
           </div>
         </div>
