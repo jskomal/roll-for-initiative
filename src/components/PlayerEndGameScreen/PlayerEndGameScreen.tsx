@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './PlayerEndGameScreen.css'
-import backdrop from '../../images/fairytail.webp'
+import backdrop from '../../images/happywarrior.gif'
 
 const PlayerEndGameScreen = () => {
   return (
