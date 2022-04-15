@@ -33,7 +33,7 @@ export interface MonsterStats {
 export interface MonsterActions {
   attackName: string
   toHit: number
-  attackDmg: string
+  attackDmg: string[]
 }
 
 interface fetchMonsterAction {
@@ -60,9 +60,9 @@ export const App = () => {
 
   const fetchMonsters = () => {
     const monsters = [
-      'monsters/swarm-of-bats',
+      'monsters/zombie',
       'monsters/goblin',
-      'monsters/gray-ooze',
+      'monsters/dire-wolf',
       'monsters/ghoul',
       'monsters/bugbear'
     ]
