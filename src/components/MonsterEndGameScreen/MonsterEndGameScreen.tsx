@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './MonsterEndGameScreen.css'
-import death from '../../images/deathgif.gif'
+import death from '../../images/fallenwarrior.gif'
 
 const MonsterEndGameScreen = () => {
   return (
