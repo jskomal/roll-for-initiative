@@ -30,7 +30,7 @@
   margin-top: 2vh;
 }
 
-.monster-name{
+.monster-name {
   margin-top: 2vh;
 }
 
@@ -93,3 +93,8 @@
 
 /* .character-hp-bar {
 } */
+
+.event-log-text {
+  width: 30ch;
+  text-align: center;
+}
