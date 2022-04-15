@@ -4,6 +4,8 @@ import { fetchAPI } from './ApiCalls'
 import './App.css'
 import CharacterView from './components/CharacterView/CharacterView'
 import BattleGround from './components/BattleGround/BattleGround'
+import PlayerEndGameScreen from './components/PlayerEndGameScreen/PlayerEndGameScreen'
+import MonsterEndGameScreen from './components/MonsterEndGameScreen/MonsterEndGameScreen'
 import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
 
@@ -119,6 +121,12 @@ export const App = () => {
         {selectedCharacter && monsters && (
           <BattleGround selectedCharacter={selectedCharacter} monsters={monsters} />
         )}
+      </Route>
+      <Route exact path='/monster-end-game'>
+          <MonsterEndGameScreen />
+      </Route>
+      <Route exact path='/player-end-game' >
+          <PlayerEndGameScreen />
       </Route>
     </Switch>
   )
