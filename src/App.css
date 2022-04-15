@@ -34,3 +34,21 @@
   z-index: -1;
   box-shadow: 0 0 50vh 10vh black;
 }
+
+button {
+  background-color: #4c6b94;
+}
+
+button:hover {
+  cursor: pointer;
+  box-shadow: 0 0 1vh goldenrod;
+}
+
+button:disabled {
+  background-color: #434b56;
+}
+
+button:disabled:hover {
+  box-shadow: none;
+  cursor: not-allowed;
+}
