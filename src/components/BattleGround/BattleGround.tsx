@@ -213,7 +213,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
             </div>
           </div>
           <div className='event-log'>
-            <p>{eventLog}</p>
+            {isGameStarted && <p>{eventLog}</p>}
             {!isGameStarted && (
               <button onClick={rollForInitiative}>roll for initiative</button>
             )}
