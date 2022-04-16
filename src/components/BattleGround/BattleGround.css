@@ -3,7 +3,6 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
-  color: white;
   padding: 1em;
 }
 
@@ -13,15 +12,16 @@
   justify-content: flex-end;
   align-items: flex-end;
   height: 40vh;
-  /* border: 1px solid yellow; */
 }
 
 .monster-display {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-right: 5vw;
+  top: 1.5vh;
 }
 
 .monster-img {
@@ -30,12 +30,17 @@
   margin-top: 2vh;
 }
 
+progress {
+  z-index: 100;
+  border: 1px solid rgb(11, 188, 11);
+  border-radius: 0.3rem;
+  height: 1.5vh;
+  margin-bottom: 0.5rem;
+}
+
 .monster-name {
   margin-top: 2vh;
 }
-
-/* .monster-hp-bar {
-} */
 
 .event-log {
   display: flex;
@@ -44,35 +49,25 @@
   align-items: center;
   background-color: rgba(78, 78, 145, 0.274);
   border-radius: 0.5rem;
-  /* border: 1px solid yellow; */
-  height: 15vh;
+  height: 12vh;
 }
 
 .character-box {
   display: flex;
-  /* flex-direction: column; */
   justify-content: flex-start;
   align-items: flex-start;
-  /* border: 1px solid yellow; */
   height: 40vh;
 }
 
 .player-portrait {
   height: 42vh;
-  /* width: 30vw; */
   object-fit: cover;
-  /* border: 1px solid white; */
 }
-
-/* .player-hp {
-
-} */
 
 .character-display {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* margin-top: 1vh; */
 }
 
 .attack-button {
@@ -88,13 +83,9 @@
   justify-content: center;
   height: 40vh;
   align-items: center;
-  /* border:solid red; */
 }
 
-/* .character-hp-bar {
-} */
-
 .event-log-text {
-  width: 30ch;
+  width: 50vw;
   text-align: center;
 }
