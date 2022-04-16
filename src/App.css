@@ -10,7 +10,6 @@
 .main-title {
   margin-top: 30vh;
   margin-bottom: 10vh;
-  text-shadow: 3px 3px black;
   text-align: center;
 }
 
@@ -34,4 +33,23 @@
   position: fixed;
   z-index: -1;
   box-shadow: 0 0 50vh 10vh black;
+}
+
+button {
+  background-color: #4c6b94;
+  border-radius: 0.5rem;
+}
+
+button:hover {
+  cursor: pointer;
+  box-shadow: 0 0 1vh goldenrod;
+}
+
+button:disabled {
+  background-color: #434b56;
+}
+
+button:disabled:hover {
+  box-shadow: none;
+  cursor: not-allowed;
 }
