@@ -246,7 +246,21 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
       }
     }
   }
-  const clericSpecial = () => {}
+  const clericSpecial = () => {
+    const healingAmount = rollDice(1, 4) + 2
+    setPlayerCurrentHP((prevHP) => {
+      if (prevHP + healingAmount >= playerHP) {
+        return playerHP
+      } else {
+        return prevHP + healingAmount
+      }
+    })
+    setEventLog(
+      `${
+        playerName.split(' ')[0]
+      } used Healing Word, and healed for ${healingAmount} HP. Strike down your foe!`
+    )
+  }
   const rogueSpecial = () => {}
 
   return (
@@ -308,7 +322,8 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
                   !isPlayerTurn ||
                   !isGameStarted ||
                   playerSpecialCooldown !== 0 ||
-                  isAttackClicked
+                  isAttackClicked ||
+                  (playerDnDClass === 'Cleric' && playerCurrentHP === playerHP)
                 }
               >
                 {playerSpecial.split(' ')[0]} {playerSpecial.split(' ')[1].slice(0, -1)}
