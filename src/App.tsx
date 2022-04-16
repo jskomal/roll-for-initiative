@@ -123,10 +123,10 @@ export const App = () => {
         )}
       </Route>
       <Route exact path='/monster-end-game'>
-          <MonsterEndGameScreen />
+        <MonsterEndGameScreen />
       </Route>
-      <Route exact path='/player-end-game' >
-          <PlayerEndGameScreen />
+      <Route exact path='/player-end-game'>
+        <PlayerEndGameScreen />
       </Route>
     </Switch>
   )
