@@ -261,7 +261,18 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
       } used Healing Word, and healed for ${healingAmount} HP. Strike down your foe!`
     )
   }
-  const rogueSpecial = () => {}
+  const rogueSpecial = () => {
+    if (monsterCurrentHP) {
+      let damage = rollDice(2, 6)
+      let newHP = doDamage(damage, monsterCurrentHP)
+      setEventLog(
+        `${
+          playerName.split(' ')[0]
+        } used Sneak Attack, you deftly strike for ${damage} damage! Attack Again!`
+      )
+      setMonsterCurrentHP(newHP)
+    }
+  }
 
   return (
     <>
