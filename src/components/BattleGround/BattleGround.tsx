@@ -25,15 +25,23 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
 
   //Player variables ------------
 
-  const [playerDmgRoll, setPlayerDmgRoll] = useState<string[]>(player.attackRoll)
+  const [playerDmgRoll, setPlayerDmgRoll] = useState<string[]>(
+    player.attackRoll
+  )
   const [playerHP, setPlayerHP] = useState<number>(player.HP)
   const [playerCurrentHP, setPlayerCurrentHP] = useState<number>(player.HP)
   const [playerAC, setPlayerAC] = useState<number>(player.AC)
   const [playerWeapon, setPlayerWeapon] = useState<string>(player.weapon)
-  const [playerInitiative, setPlayerInitiative] = useState<number>(player.initiative)
+  const [playerInitiative, setPlayerInitiative] = useState<number>(
+    player.initiative
+  )
   const [playerToHit, setPlayerToHit] = useState<number>(player.toHit)
-  const [playerSpecial, setPlayerSpecial] = useState<string>(player.specialAbility)
-  const [playerInitiativeRoll, setPlayerInitiativeRoll] = useState<number | null>(null)
+  const [playerSpecial, setPlayerSpecial] = useState<string>(
+    player.specialAbility
+  )
+  const [playerInitiativeRoll, setPlayerInitiativeRoll] = useState<
+    number | null
+  >(null)
   const [playerPortrait, setPlayerPortrait] = useState<string>(player.portrait)
 
   //Monster variables ------------
@@ -43,8 +51,12 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   const [monsterHP, setMonsterHP] = useState<number | null>(null)
   const [monsterCurrentHP, setMonsterCurrentHP] = useState<number | null>(null)
   const [monsterAC, setMonsterAC] = useState<number | null>(null)
-  const [monsterActions, setMonsterActions] = useState<MonsterActions[] | null>(null)
-  const [monsterInitiativeRoll, setMonsterInitiativeRoll] = useState<number | null>(null)
+  const [monsterActions, setMonsterActions] = useState<MonsterActions[] | null>(
+    null
+  )
+  const [monsterInitiativeRoll, setMonsterInitiativeRoll] = useState<
+    number | null
+  >(null)
   const [monsterPortrait, setMonsterPortrait] = useState<string>('')
 
   // Globals ------------
@@ -69,7 +81,12 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   }, [monsterName])
 
   useEffect(() => {
-    if (!isPlayerTurn && !isMonsterEndGame && !isPlayerEndGame && isGameStarted) {
+    if (
+      !isPlayerTurn &&
+      !isMonsterEndGame &&
+      !isPlayerEndGame &&
+      isGameStarted
+    ) {
       setEventLog('Monster is attacking...')
       setTimeout(monsterAttack, 2000)
     }
@@ -124,8 +141,17 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     setIsPlayerTurn(() => (playerRoll >= monsterRoll ? true : false))
     setPlayerInitiativeRoll(playerRoll)
     setMonsterInitiativeRoll(monsterRoll)
-    console.log(`player init: ${playerRoll}, monster: ${monsterRoll}`)
-    setIsGameStarted(true)
+    if (playerRoll >= monsterRoll) {
+      setEventLog(
+        `You rolled ${playerRoll} to the ${monsterName}'s ${monsterRoll}. You attack first!`
+        )
+      setIsGameStarted(true)
+    } else if (monsterRoll > playerRoll) {
+      setEventLog(
+        `The ${monsterName} rolled ${monsterRoll} to your ${playerRoll}.  Prepare to Defend!`
+        )
+      setIsGameStarted(true)
+    }
   }
 
   const playerAttack = () => {
@@ -134,9 +160,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
       if (monsterAC && monsterCurrentHP) {
         const ATKSuccess = rollToHit(playerToHit)
         if (checkForHit(ATKSuccess, monsterAC)) {
-          console.log('player hit')
           let damage = rollDamage(playerDmgRoll)
-          console.log(`player damage: ${damage}`)
           let newHP = doDamage(damage, monsterCurrentHP)
           setEventLog(
             `your roll: ${ATKSuccess} vs AC: ${monsterAC}, you hit for ${damage} damage!`
@@ -144,7 +168,6 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
           setMonsterCurrentHP(newHP)
         } else {
           setEventLog(`your roll: ${ATKSuccess} vs AC: ${monsterAC}, you miss!`)
-          console.log('player miss')
         }
       }
       setTimeout(() => {
@@ -156,13 +179,11 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   const monsterAttack = () => {
     if (!isMonsterEndGame && !isPlayerEndGame && !isPlayerTurn) {
       if (monsterActions) {
-        console.log('monster attacks')
         const index = rollDice(1, monsterActions.length) - 1
         const attack = monsterActions[index]
         const ATKSuccess = rollToHit(attack.toHit) + 5 // buffed here
         if (checkForHit(ATKSuccess, playerAC)) {
           let damage = rollDamage(attack.attackDmg)
-          console.log(`monster damage: ${damage}`)
           let newHP = doDamage(damage, playerCurrentHP)
           setEventLog(
             `${monsterName} used ${attack.attackName}: ${ATKSuccess} vs your AC: ${playerAC}, they hit for ${damage} damage!`
@@ -172,7 +193,6 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
           setEventLog(
             `${monsterName} used ${attack.attackName}: ${ATKSuccess} vs your AC: ${playerAC}, they missed!`
           )
-          console.log('monster miss')
         }
       }
       setTimeout(() => {
@@ -185,12 +205,8 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     if (monsterCurrentHP || monsterCurrentHP === 0) {
       if (monsterCurrentHP <= 0) {
         setIsPlayerEndGame(true)
-        setEventLog('You Won')
-        console.log('player won')
       } else if (playerCurrentHP <= 0) {
         setIsMonsterEndGame(true)
-        setEventLog('Monster Won')
-        console.log('monster won')
       }
     }
   }
@@ -243,17 +259,20 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
               <button
                 className='attack-button button'
                 onClick={() => playerAttack()}
-                disabled={!isPlayerTurn}
+                disabled={!isPlayerTurn || !isGameStarted}
               >
                 Attack!
               </button>
-              <button className='attack-button' disabled={!isPlayerTurn}>
+              <button
+                className='attack-button'
+                disabled={!isPlayerTurn || !isGameStarted}
+              >
                 Special Attack
               </button>
             </div>
           </div>
-          {isMonsterEndGame && <Redirect to="/monster-end-game" ></Redirect>}
-          {isPlayerEndGame && <Redirect to="/player-end-game" ></Redirect>}
+          {isMonsterEndGame && <Redirect to='/monster-end-game'></Redirect>}
+          {isPlayerEndGame && <Redirect to='/player-end-game'></Redirect>}
         </div>
       )}
     </>
