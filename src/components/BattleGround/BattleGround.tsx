@@ -223,6 +223,8 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
     setPlayerSpecialCooldown(6)
   }
 
+  // Special attacks
+
   const fighterSpecial = () => {
     if (!isMonsterEndGame && !isPlayerEndGame) {
       if (monsterAC && monsterCurrentHP) {
@@ -246,6 +248,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
       }
     }
   }
+
   const clericSpecial = () => {
     const healingAmount = rollDice(1, 4) + 2
     setPlayerCurrentHP((prevHP) => {
@@ -261,6 +264,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
       } used Healing Word, and healed for ${healingAmount} HP. Strike down your foe!`
     )
   }
+
   const rogueSpecial = () => {
     if (monsterCurrentHP) {
       let damage = rollDice(2, 6)
