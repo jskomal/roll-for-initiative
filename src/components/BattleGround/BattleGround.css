@@ -88,3 +88,20 @@ progress {
   width: 50vw;
   text-align: center;
 }
+
+@media only screen and (max-width: 700px) {
+  .button-section {
+    flex-direction: column;
+  }
+
+  .attack-button {
+    margin-bottom: 1em;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .button-section {
+    justify-content: flex-end;
+    width: 80vw;
+  }
+}
