@@ -8,23 +8,9 @@
 }
 
 .main-title {
-  margin-top: 30vh;
+  margin-top: 40vh;
   margin-bottom: 10vh;
   text-align: center;
-}
-
-.enter-button {
-  border: 1px solid black;
-  background-color: transparent;
-  padding: 1rem;
-  cursor: pointer;
-  border-radius: 0.3rem;
-  text-shadow: 2px 2px black;
-}
-
-.enter-button:hover {
-  color: lightblue;
-  border: 1px solid lightblue;
 }
 
 .welcome-gif {
@@ -33,6 +19,10 @@
   position: fixed;
   z-index: -1;
   box-shadow: 0 0 50vh 10vh black;
+}
+
+.enter-button {
+  margin-bottom: 2vh;
 }
 
 button {
