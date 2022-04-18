@@ -80,17 +80,27 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   }, [isPlayerTurn])
 
   useEffect(() => {
-    checkEndGame()
+    if (monsterCurrentHP !== null) {
+      if (playerCurrentHP <= 0) {
+        setEventLog('You Died.')
+      } else if (monsterCurrentHP <= 0) {
+        setEventLog('Victory!!!')
+      }
+    }
+    setTimeout(() => {
+      checkEndGame()
+    }, 2000)
+  }, [playerCurrentHP, monsterCurrentHP])
+
+  useEffect(() => {
     if (!isPlayerTurn) setEventLog('Choose your attack')
     if (!isMonsterEndGame && !isPlayerEndGame) {
       setIsPlayerTurn((previousState) => !previousState)
     }
     setPlayerSpecialCooldown((prevCount) => {
       if (playerSpecialCooldown > 0) {
-        console.log(playerSpecialCooldown)
         return prevCount - 1
       } else {
-        console.log(playerSpecialCooldown)
         return prevCount
       }
     })
@@ -284,7 +294,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
         <div className='battleground'>
           <div className='monster-box'>
             <div className='monster-display'>
-              {monsterCurrentHP && monsterHP && (
+              {monsterCurrentHP !== null && monsterHP !== null && (
                 <>
                   <h2 className='monster-name'>{monsterName}</h2>
                   <img className='monster-img' src={monsterPortrait}></img>
