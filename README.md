@@ -50,7 +50,9 @@ This is the "stretch tech" group project for Mod 3 at Turing School of Software 
 ## Site Examples
 
 ![homepagemobile](https://media.giphy.com/media/5vm9V13U9k8quqzg9G/giphy.gif)
+
 ![losingpagemobile](https://media.giphy.com/media/g3cl7JaJGB91yHmNZF/giphy.gif)
+
 ![homepagedesktop](https://media.giphy.com/media/PlLUql59TobXv8Z3Ec/giphy.gif)
 
 ## Install and Setup
