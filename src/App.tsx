@@ -10,6 +10,7 @@ import HowToPlay from './components/HowToPlay/HowToPlay'
 import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
 import ReactPlayer from 'react-player'
+import playPause from './images/play.svg'
 const music = require('./music.mp3')
 
 export interface CharacterStats {
@@ -57,12 +58,16 @@ export const App = () => {
   const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
   const [monsters, setMonsters] = useState<MonsterStats[]>([])
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [selectedCharacter, setSelectedCharacter] =
-    useState<CharacterStats | null>(null)
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterStats | null>(null)
+  const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
   useEffect(() => {
     fetchMonsters()
   }, [])
+
+  const toggleIsPlaying = () => {
+    setIsPlaying((prev) => !prev)
+  }
 
   const fetchMonsters = () => {
     const monsters = [
@@ -91,9 +96,7 @@ export const App = () => {
               return {
                 attackName: action.name,
                 toHit: action.attack_bonus,
-                attackDmg: action.damage.map(
-                  (damageItem) => damageItem.damage_dice
-                )
+                attackDmg: action.damage.map((damageItem) => damageItem.damage_dice)
               }
             })
           }
@@ -111,13 +114,18 @@ export const App = () => {
 
   return (
     <div>
+      {music && (
+        <button className='play-button' onClick={toggleIsPlaying}>
+          <img src={playPause} alt='play pause button' className='play-icon' />
+        </button>
+      )}
       <ReactPlayer
         className='music-player'
         url={music}
-        width='30vw'
-        height='5vh'
-        playing={true}
-        controls={true}
+        width='0vw'
+        height='0vh'
+        playing={isPlaying}
+        // controls={false}
         volume={0.2}
         loop={true}
       />
@@ -134,17 +142,11 @@ export const App = () => {
         </section>
       </Route>
       <Route exact path='/character-select'>
-        <CharacterView
-          characters={characters}
-          selectCharacter={selectCharacter}
-        />
+        <CharacterView characters={characters} selectCharacter={selectCharacter} />
       </Route>
       <Route exact path='/battle-ground'>
         {selectedCharacter && monsters && (
-          <BattleGround
-            selectedCharacter={selectedCharacter}
-            monsters={monsters}
-          />
+          <BattleGround selectedCharacter={selectedCharacter} monsters={monsters} />
         )}
       </Route>
       <Route exact path='/monster-end-game'>
