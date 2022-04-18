@@ -44,9 +44,8 @@ button:disabled:hover {
   cursor: not-allowed;
 }
 
-.music-player {
-  position: absolute;
-  left: 1vw;
-  top: 1vh;
-  min-width: 250px;
+.play-button {
+  position: fixed;
+  top: 1.5vh;
+  left: 1.5vw;
 }
