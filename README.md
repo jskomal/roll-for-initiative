@@ -10,6 +10,10 @@ Francesca McConnell | [Github](https://github.com/mcfrann)
 
 George Lemmon | [GitHub](https://github.com/GALemmon)
 
+# Original score by:
+
+Jordan Skomal
+
 ### Deploy Link
 
 Insert deploy link
@@ -26,9 +30,9 @@ Insert deploy link
 
 Hail and well met, traveler! Roll for Initiative is a turn-based brawler featuring the mythical monsters and courageous heroes from the Dungeons and Dragons (DnD) universe! Engage in single combat against one of five unique monstrous foes using one of the three playable classes from classic DnD: Fighter, Cleric, or Rogue.
 
-Roll for Initiative is played using a modified DnD 5th edition ruleset: by rolling a 20 sided dice initiative, using class-unique bonus actions such as Multi Attack, Healing Word, and Sneak Attack, and striking down your foes with might and cunning. Not familiar with DnD? Check out the how to play page on the homescreen for a detailed description on the mechanics, or just dive in and experience the simple joys of Dungeons and Dragons.
+Roll for Initiative is played using a modified DnD 5th edition ruleset by: rolling a 20 sided dice for initiative, using class-unique bonus actions such as Multi Attack, Healing Word, and Sneak Attack, and striking down your foes with might and cunning. Not familiar with DnD? Check out the how to play page on the homescreen for a detailed description of the mechanics, or just dive in and experience the simple joys of Dungeons and Dragons.
 
-Claim victory over your opponents or choose to fight again and claim your lost glory, your fate is cast by the dice.
+Gain victory over your opponents or choose to fight again reclaim your lost glory. Your fate is cast by the dice!
 
 ## Technologies
 
@@ -59,5 +63,7 @@ To run this app locally:
 Alternatively, visit our deployment link above!
 
 ## Attributions
+
+Thanks to our Project Manager, Scott Ertmer.
 
 Check out the spec sheet [here](https://frontend.turing.edu/projects/module-3/stretch.html)
