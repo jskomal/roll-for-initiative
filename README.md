@@ -10,7 +10,7 @@ Francesca McConnell | [Github](https://github.com/mcfrann)
 
 George Lemmon | [GitHub](https://github.com/GALemmon)
 
-# Original score by:
+###### Original score by:
 
 Jordan Skomal
 
