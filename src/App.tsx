@@ -11,6 +11,7 @@ import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
 import ReactPlayer from 'react-player'
 import playPause from './images/play.svg'
+import Credits from './components/Credits/Credits'
 const music = require('./music.mp3')
 
 export interface CharacterStats {
@@ -125,7 +126,6 @@ export const App = () => {
         width='0vw'
         height='0vh'
         playing={isPlaying}
-        // controls={false}
         volume={0.2}
         loop={true}
       />
@@ -138,6 +138,9 @@ export const App = () => {
           </Link>
           <Link to='/how-to-play'>
             <button className='howToPlay-button'>how to play</button>
+          </Link>
+          <Link to='/credits'>
+            <button className='enter-button'>credits</button>
           </Link>
         </section>
       </Route>
@@ -157,6 +160,9 @@ export const App = () => {
       </Route>
       <Route exact path='/how-to-play'>
         <HowToPlay />
+      </Route>
+      <Route exact path='/credits'>
+        <Credits />
       </Route>
     </div>
   )
