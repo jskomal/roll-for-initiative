@@ -1,14 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './PlayerEndGameScreen.css'
+import backdrop from '../../images/happywarrior.gif'
 
 const PlayerEndGameScreen = () => {
   return (
     <div className='player-win-area'>
-      <p>You win.</p>
-      <Link to='/character-select' >
-        <button>Play Again?</button>
-      </Link>
+      <img className='win-gif' src={backdrop} alt='you win' />
+      <div className='winning-text-container'>
+        <p className='winning-text'>You defeated your foe!</p>
+        <Link to='/character-select'>
+          <button className='winning-button'>Another quest?</button>
+        </Link>
+      </div>
     </div>
   )
 }

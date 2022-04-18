@@ -8,6 +8,8 @@ import PlayerEndGameScreen from './components/PlayerEndGameScreen/PlayerEndGameS
 import MonsterEndGameScreen from './components/MonsterEndGameScreen/MonsterEndGameScreen'
 import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
+import ReactPlayer from 'react-player'
+const music = require('./music.mp3')
 
 export interface CharacterStats {
   id: number
@@ -104,7 +106,17 @@ export const App = () => {
   }
 
   return (
-    <Switch>
+    <div>
+      <ReactPlayer
+        className='music-player'
+        url={music}
+        width='30vw'
+        height='5vh'
+        playing={true}
+        controls={true}
+        volume={0.2}
+        loop={true}
+      />
       <Route exact path='/'>
         <section className='welcome-view'>
           <img className='welcome-gif' src={welcomeGif} alt='Rainy ruins' />
@@ -123,12 +135,12 @@ export const App = () => {
         )}
       </Route>
       <Route exact path='/monster-end-game'>
-          <MonsterEndGameScreen />
+        <MonsterEndGameScreen />
       </Route>
-      <Route exact path='/player-end-game' >
-          <PlayerEndGameScreen />
+      <Route exact path='/player-end-game'>
+        <PlayerEndGameScreen />
       </Route>
-    </Switch>
+    </div>
   )
 }
 
