@@ -1,46 +1,73 @@
-# Getting Started with Create React App
+# Roll For Initiative
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+##### Created by:
 
-## Available Scripts
+Emili Kaiman | [GitHub](https://github.com/Ekaiman)
 
-In the project directory, you can run:
+Jordan Skomal | [GitHub](https://github.com/jskomal)
 
-### `npm start`
+Francesca McConnell | [Github](https://github.com/mcfrann)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+George Lemmon | [GitHub](https://github.com/GALemmon)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+##### Original score by:
 
-### `npm test`
+Jordan Skomal
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Deploy Link
 
-### `npm run build`
+Check out our deployed game [here](https://roll-for-initiative-turing.herokuapp.com/).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Table of Contents
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [Overview](#overview)
+- [Technologies](#technologies)
+- [Site Examples](#screenshots)
+- [Install and Setup](#Install)
+- [Project Goals](#Goals)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Overview
 
-### `npm run eject`
+Hail and well met, traveler! Roll for Initiative is a turn-based brawler featuring the mythical monsters and courageous heroes from the Dungeons and Dragons (DnD) universe! Engage in single combat against one of five unique monstrous foes using one of the three playable classes from classic DnD: Fighter, Cleric, or Rogue.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Roll for Initiative is played using a modified DnD 5th edition ruleset by: rolling a 20 sided dice for initiative, using class-unique bonus actions such as Multi Attack, Healing Word, and Sneak Attack, and striking down your foes with might and cunning. Not familiar with DnD? Check out the how to play page on the homescreen for a detailed description of the mechanics, or just dive in and experience the simple joys of Dungeons and Dragons.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Gain victory over your opponents or choose to fight again reclaim your lost glory. Your fate is cast by the dice!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Technologies
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- TypeScript
+- React
+- Router
+- Cypress
+- HTML
+- CSS
 
-## Learn More
+## Project Goals
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This is the "stretch tech" group project for Mod 3 at Turing School of Software and Design where students were tasked with choosing new techology to include in a unique application. The goals of Roll for Initiative were to self-teach TypeScript while collaborating in a team setting and sharpening our skills with React and Router. Designed with mobile in mind, desktop-friendly.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Site Examples
+
+![homepagemobile](https://media.giphy.com/media/5vm9V13U9k8quqzg9G/giphy.gif)
+
+![losingpagemobile](https://media.giphy.com/media/g3cl7JaJGB91yHmNZF/giphy.gif)
+
+![homepagedesktop](https://media.giphy.com/media/PlLUql59TobXv8Z3Ec/giphy.gif)
+
+## Install and Setup
+
+To run this app locally:
+
+1. Run `git clone git@github.com:jskomal/roll-for-initiative.git` in your command line
+2. Run `cd roll-for-initiative` to navigate into the repository
+3. Run `npm install`
+4. Run `npm start`
+
+Alternatively, visit our deployment link above!
+
+## Attributions
+
+Thanks to our Project Manager, Scott Ertmer.
+
+Check out the spec sheet [here](https://frontend.turing.edu/projects/module-3/stretch.html)

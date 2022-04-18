@@ -4,9 +4,10 @@ import './CharacterView.css'
 
 interface CharacterViewProps {
   characters: CharacterStats[]
+  selectCharacter: (id: number) => void
 }
 
-const CharacterView = ({ characters }: CharacterViewProps) => {
+const CharacterView = ({ characters, selectCharacter }: CharacterViewProps) => {
   const characterCards = characters.map((character) => {
     return (
       <CharacterCard
@@ -24,6 +25,7 @@ const CharacterView = ({ characters }: CharacterViewProps) => {
         attackRoll={character.attackRoll}
         specialAbility={character.specialAbility}
         portrait={character.portrait}
+        selectCharacter={selectCharacter}
       />
     )
   })

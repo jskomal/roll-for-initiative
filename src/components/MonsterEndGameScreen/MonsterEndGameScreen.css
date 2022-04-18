@@ -1,0 +1,48 @@
+.monster-win-area {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.lose-gif {
+  object-fit: cover;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: -1;
+  /* opacity: 70%; */
+}
+
+.losing-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  font-size: 4vw;
+}
+
+.losing-button {
+  margin-bottom: 2rem;
+  font-size: 4vw;
+}
+
+.losing-text-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media only screen and (min-width: 700px) {
+  .losing-text {
+    margin-top: 2rem;
+    font-size: 2em;
+  }
+
+  .losing-button {
+    margin-bottom: 2rem;
+    font-size: 2em;
+  }
+}

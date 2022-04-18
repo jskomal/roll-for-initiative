@@ -1,0 +1,16 @@
+.howToPlay-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.howToPlay-title {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.proceed-to-characters-button {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}

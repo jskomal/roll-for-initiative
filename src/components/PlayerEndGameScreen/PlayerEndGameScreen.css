@@ -1,0 +1,46 @@
+.player-win-area {
+  display: flex;
+  justify-content: center;
+}
+
+.win-gif {
+  object-fit: cover;
+  height: 100vh;
+  position: fixed;
+  z-index: -1;
+  opacity: 70%;
+}
+
+.winning-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+  font-size: 4vw;
+}
+
+.winning-button {
+  margin-bottom: 2rem;
+  font-size: 4vw;
+}
+
+.winning-text-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media only screen and (min-width: 700px) {
+  .winning-text {
+    margin-top: 2rem;
+    font-size: 2em;
+  }
+
+  .winning-button {
+    margin-bottom: 2rem;
+    font-size: 2em;
+  }
+}

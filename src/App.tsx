@@ -4,16 +4,15 @@ import { fetchAPI } from './ApiCalls'
 import './App.css'
 import CharacterView from './components/CharacterView/CharacterView'
 import BattleGround from './components/BattleGround/BattleGround'
+import PlayerEndGameScreen from './components/PlayerEndGameScreen/PlayerEndGameScreen'
+import MonsterEndGameScreen from './components/MonsterEndGameScreen/MonsterEndGameScreen'
+import HowToPlay from './components/HowToPlay/HowToPlay'
 import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
-
-interface Props {}
-
-interface State {
-  characters: CharacterStats[]
-  monsters: MonsterStats[]
-  errorMsg: string
-}
+import ReactPlayer from 'react-player'
+import playPause from './images/play.svg'
+import Credits from './components/Credits/Credits'
+const music = require('./music.mp3')
 
 export interface CharacterStats {
   id: number
@@ -41,7 +40,7 @@ export interface MonsterStats {
 export interface MonsterActions {
   attackName: string
   toHit: number
-  attackDmg: string
+  attackDmg: string[]
 }
 
 interface fetchMonsterAction {
@@ -60,16 +59,22 @@ export const App = () => {
   const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
   const [monsters, setMonsters] = useState<MonsterStats[]>([])
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterStats | null>(null)
+  const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
   useEffect(() => {
     fetchMonsters()
   }, [])
 
+  const toggleIsPlaying = () => {
+    setIsPlaying((prev) => !prev)
+  }
+
   const fetchMonsters = () => {
     const monsters = [
-      'monsters/bat',
+      'monsters/zombie',
       'monsters/goblin',
-      'monsters/gray-ooze',
+      'monsters/dire-wolf',
       'monsters/ghoul',
       'monsters/bugbear'
     ]
@@ -101,8 +106,29 @@ export const App = () => {
     })
   }
 
+  const selectCharacter = (id: number): void => {
+    let chosenCharacter = characters.find((character) => character.id === id)
+    if (chosenCharacter) {
+      setSelectedCharacter(chosenCharacter)
+    }
+  }
+
   return (
-    <Switch>
+    <div>
+      {music && (
+        <button className='play-button' onClick={toggleIsPlaying}>
+          <img src={playPause} alt='play pause button' className='play-icon' />
+        </button>
+      )}
+      <ReactPlayer
+        className='music-player'
+        url={music}
+        width='0vw'
+        height='0vh'
+        playing={isPlaying}
+        volume={0.2}
+        loop={true}
+      />
       <Route exact path='/'>
         <section className='welcome-view'>
           <img className='welcome-gif' src={welcomeGif} alt='Rainy ruins' />
@@ -110,15 +136,35 @@ export const App = () => {
           <Link to='/character-select'>
             <button className='enter-button'>roll for initiative</button>
           </Link>
+          <Link to='/how-to-play'>
+            <button className='howToPlay-button'>how to play</button>
+          </Link>
+          <Link to='/credits'>
+            <button className='enter-button'>credits</button>
+          </Link>
         </section>
       </Route>
       <Route exact path='/character-select'>
-        <CharacterView characters={characters} />
+        <CharacterView characters={characters} selectCharacter={selectCharacter} />
       </Route>
       <Route exact path='/battle-ground'>
-        <BattleGround />
+        {selectedCharacter && monsters && (
+          <BattleGround selectedCharacter={selectedCharacter} monsters={monsters} />
+        )}
       </Route>
-    </Switch>
+      <Route exact path='/monster-end-game'>
+        <MonsterEndGameScreen />
+      </Route>
+      <Route exact path='/player-end-game'>
+        <PlayerEndGameScreen />
+      </Route>
+      <Route exact path='/how-to-play'>
+        <HowToPlay />
+      </Route>
+      <Route exact path='/credits'>
+        <Credits />
+      </Route>
+    </div>
   )
 }
 
