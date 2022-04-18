@@ -105,3 +105,10 @@ progress {
     width: 80vw;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .event-log-text {
+    font-size: 0.85rem;
+    width: 100%;
+  }
+}
