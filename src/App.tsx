@@ -6,6 +6,7 @@ import CharacterView from './components/CharacterView/CharacterView'
 import BattleGround from './components/BattleGround/BattleGround'
 import PlayerEndGameScreen from './components/PlayerEndGameScreen/PlayerEndGameScreen'
 import MonsterEndGameScreen from './components/MonsterEndGameScreen/MonsterEndGameScreen'
+import HowToPlay from './components/HowToPlay/HowToPlay'
 import welcomeGif from './images/rainruins.gif'
 import { CharacterData } from './CharacterData'
 import ReactPlayer from 'react-player'
@@ -56,7 +57,8 @@ export const App = () => {
   const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
   const [monsters, setMonsters] = useState<MonsterStats[]>([])
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [selectedCharacter, setSelectedCharacter] = useState<CharacterStats | null>(null)
+  const [selectedCharacter, setSelectedCharacter] =
+    useState<CharacterStats | null>(null)
 
   useEffect(() => {
     fetchMonsters()
@@ -89,7 +91,9 @@ export const App = () => {
               return {
                 attackName: action.name,
                 toHit: action.attack_bonus,
-                attackDmg: action.damage.map((damageItem) => damageItem.damage_dice)
+                attackDmg: action.damage.map(
+                  (damageItem) => damageItem.damage_dice
+                )
               }
             })
           }
@@ -124,14 +128,23 @@ export const App = () => {
           <Link to='/character-select'>
             <button className='enter-button'>roll for initiative</button>
           </Link>
+          <Link to='/how-to-play'>
+            <button className='howToPlay-button'>how to play</button>
+          </Link>
         </section>
       </Route>
       <Route exact path='/character-select'>
-        <CharacterView characters={characters} selectCharacter={selectCharacter} />
+        <CharacterView
+          characters={characters}
+          selectCharacter={selectCharacter}
+        />
       </Route>
       <Route exact path='/battle-ground'>
         {selectedCharacter && monsters && (
-          <BattleGround selectedCharacter={selectedCharacter} monsters={monsters} />
+          <BattleGround
+            selectedCharacter={selectedCharacter}
+            monsters={monsters}
+          />
         )}
       </Route>
       <Route exact path='/monster-end-game'>
@@ -139,6 +152,9 @@ export const App = () => {
       </Route>
       <Route exact path='/player-end-game'>
         <PlayerEndGameScreen />
+      </Route>
+      <Route exact path='/how-to-play'>
+        <HowToPlay />
       </Route>
     </div>
   )

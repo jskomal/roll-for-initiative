@@ -34,3 +34,15 @@
   justify-content: space-between;
   align-items: center;
 }
+
+@media only screen and (min-width: 700px) {
+  .losing-text {
+    margin-top: 2rem;
+    font-size: 2em;
+  }
+
+  .losing-button {
+    margin-bottom: 2rem;
+    font-size: 2em;
+  }
+}
