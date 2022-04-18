@@ -55,7 +55,7 @@ This is the "stretch tech" group project for Mod 3 at Turing School of Software 
 
 To run this app locally:
 
-1. run `git clone git@github.com:jskomal/roll-for-initiative.git` in your command line
+1. Run `git clone git@github.com:jskomal/roll-for-initiative.git` in your command line
 2. Run `cd roll-for-initiative` to navigate into the repository
 3. Run `npm install`
 4. Run `npm start`
