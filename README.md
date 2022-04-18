@@ -10,13 +10,13 @@ Francesca McConnell | [Github](https://github.com/mcfrann)
 
 George Lemmon | [GitHub](https://github.com/GALemmon)
 
-###### Original score by:
+##### Original score by:
 
 Jordan Skomal
 
 ### Deploy Link
 
-Insert deploy link
+Check out our deployed game [here](https://roll-for-initiative-turing.herokuapp.com/).
 
 ## Table of Contents
 
@@ -45,11 +45,13 @@ Gain victory over your opponents or choose to fight again reclaim your lost glor
 
 ## Project Goals
 
-This is the "stretch tech" group project for Mod 3 at Turing School of Software and Design where students were tasked with choosing new techology to include in a unique application. The goals of Roll for Initiative were to self-teach TypeScript while collaborating in a team setting and sharpening our skills with React and Router.
+This is the "stretch tech" group project for Mod 3 at Turing School of Software and Design where students were tasked with choosing new techology to include in a unique application. The goals of Roll for Initiative were to self-teach TypeScript while collaborating in a team setting and sharpening our skills with React and Router. Designed with mobile in mind, desktop-friendly.
 
 ## Site Examples
 
----
+![homepagemobile](https://media.giphy.com/media/5vm9V13U9k8quqzg9G/giphy.gif)
+![losingpagemobile](https://media.giphy.com/media/g3cl7JaJGB91yHmNZF/giphy.gif)
+![homepagedesktop](https://media.giphy.com/media/PlLUql59TobXv8Z3Ec/giphy.gif)
 
 ## Install and Setup
 
