@@ -140,7 +140,7 @@ export const App = () => {
             <button className='howToPlay-button'>how to play</button>
           </Link>
           <Link to='/credits'>
-            <button className='enter-button'>credits</button>
+            <button id="credits" className='enter-button'>credits</button>
           </Link>
         </section>
       </Route>
