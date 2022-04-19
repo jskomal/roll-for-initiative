@@ -1,6 +1,5 @@
 .monster-win-area {
   display: flex;
-  /* align-items: center; */
   justify-content: center;
 }
 
@@ -10,7 +9,6 @@
   width: 100vw;
   position: fixed;
   z-index: -1;
-  /* opacity: 70%; */
 }
 
 .losing-text {
