@@ -4,6 +4,22 @@ describe('Main view Tests', () => {
       response: 200,
       fixture: 'monster.json'
     })
+    cy.intercept('GET', 'https://www.dnd5eapi.co/api/monsters/goblin', {
+      response: 200,
+      fixture: 'monster.json'
+    })
+    cy.intercept('GET', 'https://www.dnd5eapi.co/api/monsters/dire-wolf', {
+      response: 200,
+      fixture: 'monster.json'
+    })
+    cy.intercept('GET', 'https://www.dnd5eapi.co/api/monsters/ghoul', {
+      response: 200,
+      fixture: 'monster.json'
+    })
+    cy.intercept('GET', 'https://www.dnd5eapi.co/api/monsters/bugbear', {
+      response: 200,
+      fixture: 'monster.json'
+    })
   })
 
   it('should render a welcome message', () => {

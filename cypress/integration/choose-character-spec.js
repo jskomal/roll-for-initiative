@@ -4,6 +4,22 @@ describe('Character Select tests', () => {
       response: 200,
       fixture: 'monster.json'
     })
+    cy.intercept('GET', 'https://www.dnd5eapi.co/api/monsters/goblin', {
+      response: 200,
+      fixture: 'monster.json'
+    })
+    cy.intercept('GET', 'https://www.dnd5eapi.co/api/monsters/dire-wolf', {
+      response: 200,
+      fixture: 'monster.json'
+    })
+    cy.intercept('GET', 'https://www.dnd5eapi.co/api/monsters/ghoul', {
+      response: 200,
+      fixture: 'monster.json'
+    })
+    cy.intercept('GET', 'https://www.dnd5eapi.co/api/monsters/bugbear', {
+      response: 200,
+      fixture: 'monster.json'
+    })
   })
 
   it('should render a welcome message', () => {
@@ -33,26 +49,36 @@ describe('Character Select tests', () => {
       .contains('Hit Points: 28')
       .get('button')
       .contains('Select This Champion')
+      .click()
+      .url()
+      .should('eq', 'http://localhost:3000/battle-ground')
   })
 
   it('Cleric card should show more details on the back', () => {
-    cy.get('.Zinyrae')
+    cy.visit('http://localhost:3000/character-select')
+      .get('.Zinyrae')
       .contains('Cleric')
       .click()
       .get('h3')
       .contains('Hit Points: 24')
       .get('button')
       .contains('Select This Champion')
+      .click()
+      .url()
+      .should('eq', 'http://localhost:3000/battle-ground')
   })
 
-
   it('Rogue card should show more details on the back', () => {
-    cy.get('.Vaara')
+    cy.visit('http://localhost:3000/character-select')
+      .get('.Vaara')
       .contains('Rogue')
       .click()
       .get('h3')
       .contains('Hit Points: 18')
       .get('button')
       .contains('Select This Champion')
+      .click()
+      .url()
+      .should('eq', 'http://localhost:3000/battle-ground')
   })
 })
