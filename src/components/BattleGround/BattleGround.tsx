@@ -73,7 +73,7 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
   useEffect(() => {
     if (!isPlayerTurn && !isMonsterEndGame && !isPlayerEndGame && isGameStarted) {
       setTimeout(() => {
-        setEventLog('Monster is attacking...')
+        setEventLog(`${monsterName} is attacking...`)
       }, 1000)
       setTimeout(monsterAttack, 2000)
     }

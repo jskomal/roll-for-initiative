@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import { fetchAPI } from './ApiCalls'
 import './App.css'
 import CharacterView from './components/CharacterView/CharacterView'
@@ -131,6 +131,7 @@ export const App = () => {
       />
       <Route exact path='/'>
         <section className='welcome-view'>
+          {errorMessage && <h1>{errorMessage}</h1>}
           <img className='welcome-gif' src={welcomeGif} alt='Rainy ruins' />
           <h1 className='main-title'>hail and well met, traveler...</h1>
           <Link to='/character-select'>
