@@ -25,17 +25,17 @@ const BattleGround = ({ selectedCharacter, monsters }: BattleGroundProps) => {
 
   //Player variables ------------
 
-  const [playerName, setPlayerName] = useState<string>(player.name)
-  const [playerDmgRoll, setPlayerDmgRoll] = useState<string[]>(player.attackRoll)
-  const [playerDnDClass, setPlayerDnDClass] = useState<string>(player.DnDClass)
-  const [playerHP, setPlayerHP] = useState<number>(player.HP)
+  const [playerName] = useState<string>(player.name)
+  const [playerDmgRoll] = useState<string[]>(player.attackRoll)
+  const [playerDnDClass] = useState<string>(player.DnDClass)
+  const [playerHP] = useState<number>(player.HP)
   const [playerCurrentHP, setPlayerCurrentHP] = useState<number>(player.HP)
-  const [playerAC, setPlayerAC] = useState<number>(player.AC)
-  const [playerWeapon, setPlayerWeapon] = useState<string>(player.weapon)
-  const [playerInitiative, setPlayerInitiative] = useState<number>(player.initiative)
-  const [playerToHit, setPlayerToHit] = useState<number>(player.toHit)
-  const [playerSpecial, setPlayerSpecial] = useState<string>(player.specialAbility)
-  const [playerPortrait, setPlayerPortrait] = useState<string>(player.portrait)
+  const [playerAC] = useState<number>(player.AC)
+  const [playerWeapon] = useState<string>(player.weapon)
+  const [playerInitiative] = useState<number>(player.initiative)
+  const [playerToHit] = useState<number>(player.toHit)
+  const [playerSpecial] = useState<string>(player.specialAbility)
+  const [playerPortrait] = useState<string>(player.portrait)
   const [playerSpecialCooldown, setPlayerSpecialCooldown] = useState<number>(0)
 
   //Monster variables ------------
