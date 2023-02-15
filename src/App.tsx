@@ -15,158 +15,169 @@ import Credits from './components/Credits/Credits'
 const music = require('./music.mp3')
 
 export interface CharacterStats {
-  id: number
-  DnDClass: string
-  name: string
-  HP: number
-  AC: number
-  weapon: string
-  weaponDmg: string
-  toHit: number
-  initiative: number
-  bonusDmg: number
-  attackRoll: string[]
-  specialAbility: string
-  portrait: string
+	id: number
+	DnDClass: string
+	name: string
+	HP: number
+	AC: number
+	weapon: string
+	weaponDmg: string
+	toHit: number
+	initiative: number
+	bonusDmg: number
+	attackRoll: string[]
+	specialAbility: string
+	portrait: string
 }
 
 export interface MonsterStats {
-  name: string
-  HP: number
-  AC: number
-  actions: MonsterActions[]
+	name: string
+	HP: number
+	AC: { type: string; value: number; armor: any }[]
+	actions: MonsterActions[]
 }
 
 export interface MonsterActions {
-  attackName: string
-  toHit: number
-  attackDmg: string[]
+	attackName: string
+	toHit: number
+	attackDmg: string[]
 }
 
 interface fetchMonsterAction {
-  attack_bonus: number
-  damage: Damage[]
-  desc: string
-  name: string
+	attack_bonus: number
+	damage: Damage[]
+	desc: string
+	name: string
 }
 
 interface Damage {
-  damage_dice: string
-  damage_type: object
+	damage_dice: string
+	damage_type: object
 }
 
 export const App = () => {
-  const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
-  const [monsters, setMonsters] = useState<MonsterStats[]>([])
-  const [errorMessage, setErrorMessage] = useState<string>('')
-  const [selectedCharacter, setSelectedCharacter] = useState<CharacterStats | null>(null)
-  const [isPlaying, setIsPlaying] = useState<boolean>(false)
+	const [characters, setCharacters] = useState<CharacterStats[]>(CharacterData)
+	const [monsters, setMonsters] = useState<MonsterStats[]>([])
+	const [errorMessage, setErrorMessage] = useState<string>('')
+	const [selectedCharacter, setSelectedCharacter] =
+		useState<CharacterStats | null>(null)
+	const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
-  useEffect(() => {
-    fetchMonsters()
-  }, [])
+	useEffect(() => {
+		fetchMonsters()
+	}, [])
 
-  const toggleIsPlaying = () => {
-    setIsPlaying((prev) => !prev)
-  }
+	const toggleIsPlaying = () => {
+		setIsPlaying((prev) => !prev)
+	}
 
-  const fetchMonsters = () => {
-    const monsters = [
-      'monsters/zombie',
-      'monsters/goblin',
-      'monsters/dire-wolf',
-      'monsters/ghoul',
-      'monsters/bugbear'
-    ]
+	const fetchMonsters = () => {
+		const monsters = [
+			'monsters/zombie',
+			'monsters/goblin',
+			'monsters/dire-wolf',
+			'monsters/ghoul',
+			'monsters/bugbear',
+		]
 
-    monsters.forEach((monsterPath) => {
-      fetchAPI(monsterPath)
-        .then((res) => {
-          if (!res.ok) {
-            setErrorMessage('Something went wrong, please try again later!')
-          } else {
-            return res.json()
-          }
-        })
-        .then((monsterData) => {
-          const newMonster = {
-            name: monsterData.name,
-            HP: monsterData.hit_points,
-            AC: monsterData.armor_class,
-            actions: monsterData.actions.map((action: fetchMonsterAction) => {
-              return {
-                attackName: action.name,
-                toHit: action.attack_bonus,
-                attackDmg: action.damage.map((damageItem) => damageItem.damage_dice)
-              }
-            })
-          }
-          setMonsters((previousMonsters) => [...previousMonsters, newMonster])
-        })
-    })
-  }
+		monsters.forEach((monsterPath) => {
+			fetchAPI(monsterPath)
+				.then((res) => {
+					if (!res.ok) {
+						setErrorMessage('Something went wrong, please try again later!')
+					} else {
+						return res.json()
+					}
+				})
+				.then((monsterData) => {
+					const newMonster = {
+						name: monsterData.name,
+						HP: monsterData.hit_points,
+						AC: monsterData.armor_class,
+						actions: monsterData.actions.map((action: fetchMonsterAction) => {
+							return {
+								attackName: action.name,
+								toHit: action.attack_bonus,
+								attackDmg: action.damage.map(
+									(damageItem) => damageItem.damage_dice
+								),
+							}
+						}),
+					}
+					setMonsters((previousMonsters) => [...previousMonsters, newMonster])
+				})
+		})
+	}
 
-  const selectCharacter = (id: number): void => {
-    let chosenCharacter = characters.find((character) => character.id === id)
-    if (chosenCharacter) {
-      setSelectedCharacter(chosenCharacter)
-    }
-  }
+	const selectCharacter = (id: number): void => {
+		let chosenCharacter = characters.find((character) => character.id === id)
+		if (chosenCharacter) {
+			setSelectedCharacter(chosenCharacter)
+		}
+	}
 
-  return (
-    <div>
-      {music && (
-        <button className='play-button' onClick={toggleIsPlaying}>
-          <img src={playPause} alt='play pause button' className='play-icon' />
-        </button>
-      )}
-      <ReactPlayer
-        className='music-player'
-        url={music}
-        width='0vw'
-        height='0vh'
-        playing={isPlaying}
-        volume={0.2}
-        loop={true}
-      />
-      <Route exact path='/'>
-        <section className='welcome-view'>
-          {errorMessage && <h1>{errorMessage}</h1>}
-          <img className='welcome-gif' src={welcomeGif} alt='Rainy ruins' />
-          <h1 className='main-title'>hail and well met, traveler...</h1>
-          <Link to='/character-select'>
-            <button className='enter-button'>roll for initiative</button>
-          </Link>
-          <Link to='/how-to-play'>
-            <button className='howToPlay-button'>how to play</button>
-          </Link>
-          <Link to='/credits'>
-            <button id="credits" className='enter-button'>credits</button>
-          </Link>
-        </section>
-      </Route>
-      <Route exact path='/character-select'>
-        <CharacterView characters={characters} selectCharacter={selectCharacter} />
-      </Route>
-      <Route exact path='/battle-ground'>
-        {selectedCharacter && monsters && (
-          <BattleGround selectedCharacter={selectedCharacter} monsters={monsters} />
-        )}
-      </Route>
-      <Route exact path='/monster-end-game'>
-        <MonsterEndGameScreen />
-      </Route>
-      <Route exact path='/player-end-game'>
-        <PlayerEndGameScreen />
-      </Route>
-      <Route exact path='/how-to-play'>
-        <HowToPlay />
-      </Route>
-      <Route exact path='/credits'>
-        <Credits />
-      </Route>
-    </div>
-  )
+	return (
+		<div>
+			{music && (
+				<button className='play-button' onClick={toggleIsPlaying}>
+					<img src={playPause} alt='play pause button' className='play-icon' />
+				</button>
+			)}
+			<ReactPlayer
+				className='music-player'
+				url={music}
+				width='0vw'
+				height='0vh'
+				playing={isPlaying}
+				volume={0.2}
+				loop={true}
+			/>
+			<Route exact path='/'>
+				<section className='welcome-view'>
+					{errorMessage && <h1>{errorMessage}</h1>}
+					<img className='welcome-gif' src={welcomeGif} alt='Rainy ruins' />
+					<h1 className='main-title'>hail and well met, traveler...</h1>
+					<Link to='/character-select'>
+						<button className='enter-button'>roll for initiative</button>
+					</Link>
+					<Link to='/how-to-play'>
+						<button className='howToPlay-button'>how to play</button>
+					</Link>
+					<Link to='/credits'>
+						<button id='credits' className='enter-button'>
+							credits
+						</button>
+					</Link>
+				</section>
+			</Route>
+			<Route exact path='/character-select'>
+				<CharacterView
+					characters={characters}
+					selectCharacter={selectCharacter}
+				/>
+			</Route>
+			<Route exact path='/battle-ground'>
+				{selectedCharacter && monsters && (
+					<BattleGround
+						selectedCharacter={selectedCharacter}
+						monsters={monsters}
+					/>
+				)}
+			</Route>
+			<Route exact path='/monster-end-game'>
+				<MonsterEndGameScreen />
+			</Route>
+			<Route exact path='/player-end-game'>
+				<PlayerEndGameScreen />
+			</Route>
+			<Route exact path='/how-to-play'>
+				<HowToPlay />
+			</Route>
+			<Route exact path='/credits'>
+				<Credits />
+			</Route>
+		</div>
+	)
 }
 
 export default App
